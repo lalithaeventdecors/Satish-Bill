@@ -90,6 +90,7 @@
         .brand-title { margin: 0; font-size: 18px; color: #1a202c; text-transform: uppercase; font-weight: 900; letter-spacing: 0.5px; }
         .brand-address { display: none; margin: 4px 0 0 0; font-size: 10px; color: #555; line-height: 1.3; }
         .quotation-badge { font-size: 13px; font-weight: 800; color: #4a5568; text-transform: uppercase; text-align: right; }
+        .bill-id-display { font-size: 13px; font-weight: 900; color: #2d3748; margin-top: 2px; }
         .status-stamp { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 800; text-transform: uppercase; margin-top: 4px; }
         .stamp-estimation { background: #edf2f7; color: #4a5568; border: 1px solid #cbd5e0; }
         .stamp-pending { background: #fefcbf; color: #744210; border: 1px solid #faf089; }
@@ -177,6 +178,7 @@
         .btn-clear { background-color: #e53e3e; color: #fff; }
         .btn-estimation { background-color: #718096; color: #fff; font-size: 14px; padding: 10px 14px; width: 100%; }
         .btn-submit { background-color: #3182ce; color: #fff; font-size: 14px; padding: 10px 14px; width: 100%; }
+        .btn-update { background-color: #d69e2e; color: #fff; font-size: 14px; padding: 10px 14px; width: 100%; }
         .btn-complete { background-color: #38a169; color: #fff; font-size: 14px; padding: 10px 14px; width: 100%; }
         .btn-print { background-color: #2d3748; color: #fff; }
         .btn-pdf { background-color: #38a169; color: #fff; }
@@ -270,6 +272,7 @@
         </div>
         <div style="text-align: right;">
             <div class="quotation-badge">Quotation / Invoice</div>
+            <div class="bill-id-display" id="billIdDisplay">Bill No: ---</div>
             <div id="statusStamp" class="status-stamp stamp-estimation">STATUS: ESTIMATION</div>
         </div>
     </div>
@@ -375,9 +378,7 @@
     <!-- MAIN ACTION BUTTONS -->
     <div class="submit-container no-print">
         <div style="display: flex; flex-direction: column; width: 100%; gap: 8px;" id="mainActionButtons">
-            <button class="btn btn-estimation" onclick="saveAsEstimation()">📝 Save Estimation</button>
-            <button class="btn btn-submit" onclick="confirmAndSaveEvent('confirmed')">💾 Confirm Event</button>
-            <button class="btn btn-complete" onclick="processEventComplete()">🏁 Mark Complete</button>
+            <!-- Dynamic Buttons rendered based on state -->
         </div>
 
         <div id="postSubmitActions" style="display: none; width: 100%; text-align: center;">
@@ -392,8 +393,20 @@
 </div>
 
 <script>
-    localStorage.removeItem('vayu_active_draft');
+    // Connected Google Apps Script Web App URL
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby1JkIJWfrIShUmpfBIom4y3tcppdeauEzTL9RwMBhnu4uH4FjzzIEOfxns5VuP4sfh/exec"; 
 
+    function syncToGoogleSheets(eventData) {
+        if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.trim() === "") return;
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(eventData)
+        }).catch(err => console.error("Sheet Sync Failed:", err));
+    }
+
+    localStorage.removeItem('vayu_active_draft');
     document.getElementById('invDate').valueAsDate = new Date();
 
     const defaultFavorites = {
@@ -557,10 +570,10 @@
     }
 
     let currentEventId = null;
+    let currentBillId = null;
     let eventStatus = 'estimation';
     const todayStr = new Date().toISOString().split('T')[0];
 
-    // Starts completely empty with 0 items
     let eventCategories = [
         {
             categoryName: "",
@@ -572,6 +585,39 @@
     ];
 
     let advancePayments = [{ label: "1st Advance", amount: "", mode: "PhonePe / GPay", date: todayStr }];
+
+    function generateNextBillId(targetStatus) {
+        const events = getSavedEvents();
+        let maxSeq = 0;
+        const prefix = (targetStatus === 'estimation') ? 'EST' : 'CON';
+
+        events.forEach(e => {
+            if (e.billId && e.billId.startsWith(prefix)) {
+                let seq = parseInt(e.billId.replace(prefix, '')) || 0;
+                if (seq > maxSeq) maxSeq = seq;
+            }
+        });
+
+        return prefix + (maxSeq + 1);
+    }
+
+    function updateBillIdDisplay() {
+        const display = document.getElementById('billIdDisplay');
+        if (currentBillId) {
+            display.innerText = `Bill No: ${currentBillId}`;
+        } else {
+            const previewPrefix = (eventStatus === 'estimation') ? 'EST' : 'CON';
+            const events = getSavedEvents();
+            let maxSeq = 0;
+            events.forEach(e => {
+                if (e.billId && e.billId.startsWith(previewPrefix)) {
+                    let seq = parseInt(e.billId.replace(previewPrefix, '')) || 0;
+                    if (seq > maxSeq) maxSeq = seq;
+                }
+            });
+            display.innerText = `Bill No: ${previewPrefix}${maxSeq + 1} (Draft)`;
+        }
+    }
 
     function renderCategories() {
         const container = document.getElementById('categoriesContainer');
@@ -863,11 +909,42 @@
             stamp.className = 'status-stamp stamp-complete';
             stamp.innerText = 'STATUS: COMPLETED';
         }
+        updateBillIdDisplay();
+        renderActionButtons();
+    }
+
+    function renderActionButtons() {
+        const container = document.getElementById('mainActionButtons');
+        if (currentEventId) {
+            if (eventStatus === 'estimation') {
+                container.innerHTML = `
+                    <button class="btn btn-estimation" onclick="saveAsEstimation()">📝 Update Estimation</button>
+                    <button class="btn btn-submit" onclick="confirmAndSaveEvent('confirmed')">💾 Confirm Event</button>
+                    <button class="btn btn-complete" onclick="processEventComplete()">🏁 Mark Complete</button>
+                `;
+            } else if (eventStatus === 'confirmed') {
+                container.innerHTML = `
+                    <button class="btn btn-update" onclick="confirmAndSaveEvent('confirmed')">💾 Update Confirmation</button>
+                    <button class="btn btn-complete" onclick="processEventComplete()">🏁 Mark Complete</button>
+                `;
+            } else {
+                container.innerHTML = `
+                    <button class="btn btn-update" onclick="confirmAndSaveEvent('completed')">💾 Update Completed Event</button>
+                `;
+            }
+        } else {
+            container.innerHTML = `
+                <button class="btn btn-estimation" onclick="saveAsEstimation()">📝 Save Estimation</button>
+                <button class="btn btn-submit" onclick="confirmAndSaveEvent('confirmed')">💾 Confirm Event</button>
+                <button class="btn btn-complete" onclick="processEventComplete()">🏁 Mark Complete</button>
+            `;
+        }
     }
 
     function saveLiveDraft() {
         const draftData = {
             currentEventId,
+            currentBillId,
             eventStatus,
             custName: document.getElementById('custName').value,
             custAddress: document.getElementById('custAddress').value,
@@ -888,6 +965,7 @@
         if (confirm("Start a new quotation?")) {
             localStorage.removeItem('vayu_active_draft');
             currentEventId = null;
+            currentBillId = null;
             eventStatus = 'estimation';
 
             document.getElementById('custName').value = '';
@@ -964,7 +1042,8 @@
                 (evt.custMobile && evt.custMobile.includes(query)) ||
                 (evt.eventVenue && evt.eventVenue.toLowerCase().includes(query)) ||
                 (evt.custName && evt.custName.toLowerCase().includes(query)) ||
-                (evt.eventName && evt.eventName.toLowerCase().includes(query))
+                (evt.eventName && evt.eventName.toLowerCase().includes(query)) ||
+                (evt.billId && evt.billId.toLowerCase().includes(query))
             );
         }
 
@@ -978,7 +1057,7 @@
         resultsContainer.innerHTML = events.map(evt => `
             <div class="search-result-item" onclick="loadEvent('${evt.id}')">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <strong>${evt.custName || 'Client'}</strong>
+                    <strong>[${evt.billId || 'N/A'}] ${evt.custName || 'Client'}</strong>
                     <span class="status-stamp ${evt.eventStatus === 'completed' ? 'stamp-complete' : evt.eventStatus === 'confirmed' ? 'stamp-pending' : 'stamp-estimation'}">
                         ${(evt.eventStatus || 'estimation').toUpperCase()}
                     </span>
@@ -993,13 +1072,28 @@
 
     function saveEventToStorage(status) {
         let events = getSavedEvents();
-        if (!currentEventId) currentEventId = 'EVT_' + Date.now();
+        if (!currentEventId) {
+            currentEventId = 'EVT_' + Date.now();
+        }
+
+        let existingEvent = events.find(e => e.id === currentEventId);
+
+        if (!currentBillId) {
+            if (existingEvent && existingEvent.billId) {
+                currentBillId = existingEvent.billId;
+            } else {
+                currentBillId = generateNextBillId(status);
+            }
+        } else if (status === 'confirmed' && currentBillId.startsWith('EST')) {
+            currentBillId = generateNextBillId('confirmed');
+        }
 
         updateStatusUI(status);
         const totals = calculateTotals();
 
         const eventData = {
             id: currentEventId,
+            billId: currentBillId,
             eventStatus: status,
             custName: document.getElementById('custName').value,
             custAddress: document.getElementById('custAddress').value,
@@ -1012,7 +1106,9 @@
             showTerms,
             eventCategories,
             advancePayments,
-            finalBalance: totals.balance
+            grandTotal: totals.grandTotal,
+            totalAdvance: totals.totalAdvance,
+            balance: totals.balance
         };
 
         const existingIndex = events.findIndex(e => e.id === currentEventId);
@@ -1021,6 +1117,7 @@
 
         localStorage.setItem('lalitha_events_db', JSON.stringify(events));
         saveLiveDraft();
+        syncToGoogleSheets(eventData);
     }
 
     function loadEvent(eventId) {
@@ -1029,6 +1126,7 @@
         if (!evt) return;
 
         currentEventId = evt.id;
+        currentBillId = evt.billId || null;
         eventStatus = (evt.eventStatus === 'confirmed' || evt.eventStatus === 'completed') ? evt.eventStatus : 'estimation';
 
         document.getElementById('custName').value = evt.custName || '';
@@ -1060,17 +1158,17 @@
 
     function saveAsEstimation() {
         saveEventToStorage('estimation');
-        document.getElementById('mainActionButtons').style.display = 'none';
+        document.getElementById('mainActionButtons').style.display = 'flex';
         document.getElementById('postSubmitActions').style.display = 'block';
-        document.getElementById('successMsg').innerText = "📝 Estimation Saved!";
+        document.getElementById('successMsg').innerText = "📝 Estimation Saved / Updated & Synced!";
     }
 
     function confirmAndSaveEvent(status) {
-        if (confirm("Confirm and Save this Event?")) {
+        if (confirm(status === 'confirmed' ? "Confirm and Save this Event?" : "Update Completed Event?")) {
             saveEventToStorage(status);
-            document.getElementById('mainActionButtons').style.display = 'none';
+            document.getElementById('mainActionButtons').style.display = 'flex';
             document.getElementById('postSubmitActions').style.display = 'block';
-            document.getElementById('successMsg').innerText = "🎉 Event Confirmed!";
+            document.getElementById('successMsg').innerText = status === 'confirmed' ? "🎉 Event Confirmed & Synced!" : "🏁 Event Updated & Synced!";
         }
     }
 
@@ -1088,9 +1186,9 @@
         }
 
         saveEventToStorage('completed');
-        document.getElementById('mainActionButtons').style.display = 'none';
+        document.getElementById('mainActionButtons').style.display = 'flex';
         document.getElementById('postSubmitActions').style.display = 'block';
-        document.getElementById('successMsg').innerText = "🏁 Event Completed!";
+        document.getElementById('successMsg').innerText = "🏁 Event Completed & Synced!";
     }
 
     function captureA4Canvas(callback) {
@@ -1138,6 +1236,8 @@
     renderAdvances();
     checkNotesText();
     updateTermsUI();
+    updateBillIdDisplay();
+    renderActionButtons();
 </script>
 
 </body>
