@@ -418,7 +418,10 @@
         }).catch(err => console.error("Sheet Sync Failed:", err));
     }
 
+    // Clear testing data and active draft on load
     localStorage.removeItem('vayu_active_draft');
+    localStorage.removeItem('lalitha_events_db');
+
     document.getElementById('invDate').valueAsDate = new Date();
 
     const defaultFavorites = {
@@ -1082,7 +1085,7 @@
         `).join('');
     }
 
-    // Validation Check before saving/updating
+    // Required fields & category validation check
     function validateForm() {
         const custName = document.getElementById('custName').value.trim();
         const custMobile = document.getElementById('custMobile').value.trim();
@@ -1206,20 +1209,28 @@
         saveLiveDraft();
     }
 
+    // Secondary Confirmation for Submitting / Updating Estimation
     function saveAsEstimation() {
-        if (saveEventToStorage('estimation')) {
-            document.getElementById('mainActionButtons').style.display = 'flex';
-            document.getElementById('postSubmitActions').style.display = 'block';
-            document.getElementById('successMsg').innerText = "📝 Estimation Saved / Updated & Synced!";
+        const msg = currentEventId ? "Are you sure you want to update this estimation?" : "Are you sure you want to save this as a new estimation?";
+        if (confirm(msg)) {
+            if (saveEventToStorage('estimation')) {
+                document.getElementById('mainActionButtons').style.display = 'flex';
+                document.getElementById('postSubmitActions').style.display = 'block';
+                document.getElementById('successMsg').innerText = "📝 Estimation Saved / Updated & Synced!";
+            }
         }
     }
 
+    // Secondary Confirmation for Confirming / Updating Event
     function confirmAndSaveEvent(status) {
-        if (confirm(status === 'confirmed' ? "Confirm and Save this Event?" : "Update Completed Event?")) {
-            if (saveEventToStorage(status)) {
-                document.getElementById('mainActionButtons').style.display = 'flex';
-                document.getElementById('postSubmitActions').style.display = 'block';
-                document.getElementById('successMsg').innerText = status === 'confirmed' ? "🎉 Event Confirmed & Synced!" : "🏁 Event Updated & Synced!";
+        const actionLabel = status === 'confirmed' ? "Confirm and Save this Event?" : "Update Completed Event?";
+        if (confirm(actionLabel)) {
+            if (confirm("Final Check: Do you want to push these changes to the records and sync sheet?")) {
+                if (saveEventToStorage(status)) {
+                    document.getElementById('mainActionButtons').style.display = 'flex';
+                    document.getElementById('postSubmitActions').style.display = 'block';
+                    document.getElementById('successMsg').innerText = status === 'confirmed' ? "🎉 Event Confirmed & Synced!" : "🏁 Event Updated & Synced!";
+                }
             }
         }
     }
@@ -1237,10 +1248,12 @@
             renderAdvances();
         }
 
-        if (saveEventToStorage('completed')) {
-            document.getElementById('mainActionButtons').style.display = 'flex';
-            document.getElementById('postSubmitActions').style.display = 'block';
-            document.getElementById('successMsg').innerText = "🏁 Event Completed & Synced!";
+        if (confirm("Are you ready to mark this event completely finished?")) {
+            if (saveEventToStorage('completed')) {
+                document.getElementById('mainActionButtons').style.display = 'flex';
+                document.getElementById('postSubmitActions').style.display = 'block';
+                document.getElementById('successMsg').innerText = "🏁 Event Completed & Synced!";
+            }
         }
     }
 
