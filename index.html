@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Lalitha Event Decors - Quotation / Invoice</title>
+    <!-- External Libraries for Exporting JPG & PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f2f4f8;
+            margin: 0;
+            padding: 8px;
+            color: #1c1e21;
+        }
+
+        /* Responsive Container for Mobile/iPhone Screen with Fixed Export Dimension */
+        .card {
+            width: 100%;
+            max-width: 820px;
+            min-height: 1123px;
+            margin: auto;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Search Bar Header */
+        .search-container {
+            width: 100%;
+            max-width: 820px;
+            margin: 0 auto 10px auto;
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 10px 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            position: relative;
+        }
+        .search-container input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px; /* iOS friendly font size prevents auto-zoom */
+        }
+        .search-results-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            max-height: 280px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            z-index: 100;
+            display: none;
+        }
+        .search-result-item {
+            padding: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+        }
+        .search-result-item:hover, .search-result-item:active { background: #f0f4f8; }
+
+        .header {
+            border-bottom: 2px solid #1a252f;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .brand-title {
+            margin: 0;
+            font-size: 20px;
+            color: #1a252f;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 800;
+        }
+        .brand-address {
+            margin: 3px 0 0 0;
+            font-size: 11px;
+            color: #444;
+            line-height: 1.35;
+        }
+        .quotation-badge-container {
+            text-align: right;
+        }
+        .quotation-badge {
+            font-size: 15px;
+            font-weight: bold;
+            color: #1a252f;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .status-stamp {
+            margin-top: 4px;
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .stamp-complete { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .stamp-pending { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+
+        .client-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+        }
+        @media (max-width: 600px) {
+            .client-grid { grid-template-columns: 1fr; }
+        }
+        .grid-column {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .field {
+            display: flex;
+            flex-direction: column;
+        }
+        .field label {
+            font-size: 10px;
+            font-weight: 700;
+            color: #555;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+        .field input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* Preset Quick-Add Bar */
+        .presets-bar {
+            margin-bottom: 12px;
+            background: #fff8e7;
+            border: 1px solid #f0e2b6;
+            padding: 8px 10px;
+            border-radius: 6px;
+        }
+        .presets-title {
+            font-size: 11px;
+            font-weight: bold;
+            color: #8a6d3b;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+        .preset-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .chip {
+            background-color: #ffffff;
+            border: 1px solid #d4af37;
+            color: #1a252f;
+            padding: 6px 12px;
+            border-radius: 18px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Table Styling */
+        .table-container { 
+            overflow-x: auto; 
+            -webkit-overflow-scrolling: touch; 
+            margin-bottom: 12px; 
+        }
+        table {
+            width: 100%;
+            min-width: 700px;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        th {
+            background-color: #1a252f;
+            color: #ffffff;
+            padding: 8px 6px;
+            font-size: 11px;
+            text-align: left;
+            text-transform: uppercase;
+        }
+        td {
+            padding: 6px 4px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: top;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+        input.cell {
+            width: 100%;
+            border: 1px solid #ddd;
+            padding: 6px;
+            font-size: 13px;
+            border-radius: 3px;
+            line-height: 1.4;
+        }
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+
+        /* Buttons & Actions */
+        .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
+        .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            touch-action: manipulation;
+        }
+        .btn-add { background-color: #27ae60; color: #fff; }
+        .btn-clear { background-color: #e74c3c; color: #fff; }
+        .btn-submit { background-color: #2980b9; color: #fff; font-size: 14px; padding: 12px 18px; width: 100%; }
+        .btn-complete { background-color: #27ae60; color: #fff; font-size: 14px; padding: 12px 18px; width: 100%; }
+        .btn-print { background-color: #1a252f; color: #fff; }
+        .btn-pdf { background-color: #27ae60; color: #fff; }
+        .btn-jpeg { background-color: #d35400; color: #fff; }
+        .btn-terms-toggle {
+            font-size: 11px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        .btn-terms-add { background-color: #27ae60; color: #ffffff; margin-top: 10px; }
+        .btn-terms-remove { background-color: #8e44ad; color: #ffffff; }
+        .btn-del { background-color: #ff4d4d; color: #fff; padding: 6px 10px; border-radius: 4px; border: none; cursor: pointer; }
+
+        /* Submit Section Container */
+        .submit-container {
+            margin-top: 15px;
+            padding: 12px;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Payment Section */
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        .advances-container {
+            flex: 1.6;
+            width: 100%;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+        }
+        .advances-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            font-weight: bold;
+            color: #1a252f;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .btn-adv-add {
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .advance-row {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 6px;
+            align-items: center;
+        }
+        .advance-row input, .advance-row select {
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .summary-box {
+            background: #1a252f;
+            color: #fff;
+            padding: 12px;
+            border-radius: 6px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+        .summary-row input {
+            width: 100px;
+            padding: 4px 6px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background: #2c3e50;
+            color: #fff;
+            font-weight: bold;
+            text-align: right;
+            font-size: 14px;
+        }
+        .btn-disc-toggle {
+            background: #f39c12;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .summary-row.balance {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2ecc71;
+            border-top: 1px solid #34495e;
+            padding-top: 6px;
+        }
+
+        /* Notes & Terms Box */
+        .custom-notes-box, .bottom-notes {
+            margin-top: 12px;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 8px 10px;
+        }
+        .terms-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .custom-notes-box label, .bottom-notes label {
+            font-size: 11px;
+            font-weight: bold;
+            color: #1a252f;
+            text-transform: uppercase;
+            display: block;
+        }
+        .custom-notes-box textarea {
+            width: 100%;
+            height: 50px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px;
+            font-size: 13px;
+            resize: none;
+            line-height: 1.4;
+        }
+        .terms-list {
+            margin: 6px 0 0 0;
+            padding-left: 18px;
+            font-size: 11px;
+            color: #333;
+            line-height: 1.5;
+        }
+        .terms-list li { margin-bottom: 3px; }
+
+        /* Hiding Terms Content */
+        .terms-hidden { display: none !important; }
+
+        /* Quotation Export Mode */
+        .quotation-mode input, .quotation-mode select, .quotation-mode textarea {
+            border: none !important;
+            background: transparent !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+            font-weight: 600 !important;
+            color: #000 !important;
+            appearance: none !important;
+            -webkit-appearance: none !important;
+        }
+
+        /* Print Optimization */
+        @media print {
+            @page { size: A4 portrait; margin: 0; }
+            .no-print, .presets-bar, .btn-del, .btn-adv-add, .btn-disc-toggle, .submit-container, .search-container, .btn-terms-toggle { display: none !important; }
+            .discount-row-hidden, .notes-row-hidden, .terms-hidden { display: none !important; }
+            body { background: #fff; padding: 0; font-size: 12px; color: #000; }
+            .card {
+                width: 210mm !important;
+                height: 297mm !important;
+                box-shadow: none !important;
+                padding: 12mm !important;
+                border-radius: 0 !important;
+            }
+            .header { border-bottom: 2px solid #000; padding-bottom: 6px; margin-bottom: 10px; }
+            .client-grid { background: none; border: 1px solid #000; padding: 8px; border-radius: 0; gap: 8px; margin-bottom: 10px; grid-template-columns: 1fr 1fr !important; }
+            .field label { font-size: 9px; color: #333; }
+            .field input { border: none !important; padding: 0; font-weight: bold; font-size: 12px; background: transparent !important; }
+            table { border: 1px solid #000; margin-bottom: 10px; width: 100% !important; min-width: 100% !important; }
+            th { background: #f0f0f0 !important; color: #000 !important; border: 1px solid #000; padding: 6px; font-size: 10px; }
+            td { border: 1px solid #000; padding: 6px 4px; font-size: 11px; }
+            input.cell { border: none !important; background: transparent !important; padding: 0; font-size: 11px; }
+            .action-bar { border: 1px solid #000; padding: 8px; margin-top: 0; flex-wrap: nowrap !important; }
+            .advances-container { border: none; padding: 0; background: transparent; width: 60% !important; }
+            .advance-row input, .advance-row select { border: none !important; background: transparent !important; font-weight: bold; padding: 0; appearance: none; -webkit-appearance: none; }
+            .summary-box { background: transparent; color: #000; border-left: 1px solid #000; padding: 0 0 0 12px; border-radius: 0; width: 40% !important; }
+            .summary-row input { border: none !important; background: transparent !important; color: #000 !important; padding: 0; }
+            .summary-row.balance { color: #000; border-top: 1px solid #000; }
+            .custom-notes-box, .bottom-notes { border: 1px solid #000; padding: 6px; background: transparent; margin-top: 8px; }
+            .custom-notes-box textarea { border: none !important; background: transparent !important; padding: 0; height: auto; }
+            .terms-list { padding-left: 14px; font-size: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- SEARCH SECTION FOR SUBMITTED EVENTS -->
+<div class="search-container no-print">
+    <span style="font-weight: bold; font-size: 13px; color: #1a252f;">🔍 Events:</span>
+    <input type="text" id="searchInput" placeholder="Tap to view upcoming events or search..." onfocus="showUpcomingDropdown()" oninput="handleSearch()">
+    <div class="search-results-dropdown" id="searchResults"></div>
+</div>
+
+<div class="card" id="billInvoiceCard">
+    <div>
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h1 class="brand-title">Lalitha Event Decors</h1>
+                <p class="brand-address">
+                    D.No 9-6-18/1, Opp High School Gate, Highschool Road, Gajuwaka, Visakhapatnam - 530026<br>
+                    <strong>Contact:</strong> +91 91774 47779
+                </p>
+            </div>
+            <div class="quotation-badge-container">
+                <div class="quotation-badge">QUOTATION / INVOICE</div>
+                <div id="statusStamp" class="status-stamp stamp-pending">STATUS: PENDING</div>
+            </div>
+        </div>
+
+        <!-- Client & Event Details Split Layout -->
+        <div class="client-grid">
+            <div class="grid-column">
+                <div class="field">
+                    <label>Customer Name</label>
+                    <input type="text" id="custName" placeholder="e.g. Rahul" oninput="autoCap(this)">
+                </div>
+                <div class="field">
+                    <label>Customer Address</label>
+                    <input type="text" id="custAddress" placeholder="e.g. Gajuwaka, Vizag" oninput="autoCap(this)">
+                </div>
+                <div class="field">
+                    <label>Contact Mobile Number</label>
+                    <input type="tel" id="custMobile" placeholder="e.g. 9876543210" pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                </div>
+            </div>
+
+            <div class="grid-column">
+                <div class="field">
+                    <label>Event Name</label>
+                    <input type="text" id="eventName" placeholder="e.g. Wedding Reception" oninput="autoCap(this)">
+                </div>
+                <div class="field">
+                    <label>Venue</label>
+                    <input type="text" id="eventVenue" placeholder="e.g. Main Ground, Visakhapatnam" oninput="autoCap(this)">
+                </div>
+                <div class="field">
+                    <label>Event Date & Time</label>
+                    <div style="display: flex; gap: 6px;">
+                        <input type="date" id="eventDate" style="flex: 1;">
+                        <input type="time" id="eventTime" style="flex: 1;">
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Invoice Date</label>
+                    <input type="date" id="invDate">
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Preset Tap Bar -->
+        <div class="presets-bar no-print">
+            <div class="presets-title">⚡ Quick Add Favorite Items:</div>
+            <div class="preset-buttons">
+                <button class="chip" onclick="addPreset('LED Counters', 'Pcs', 5000, 1, '')">+ LED Counters</button>
+                <button class="chip" onclick="addPreset('LED Wall', 'Sft', 140, 432, '8x16 ft')">+ LED Wall</button>
+                <button class="chip" onclick="addPreset('Fog Machine', 'Pair', 4000, 1, '')">+ Fog</button>
+                <button class="chip" onclick="addPreset('Flower Blast', 'Shot', 3500, 1, '')">+ Flower Blast</button>
+                <button class="chip" onclick="addPreset('Paper Blast', 'Shot', 3000, 1, '')">+ Paper Blast</button>
+                <button class="chip" onclick="addPreset('Cold Fire', 'Pair', 5500, 1, '')">+ Cold Fire</button>
+                <button class="chip" onclick="addPreset('Sound System', 'Set', 20000, 1, 'Linear Tops')">+ Sound</button>
+                <button class="chip" onclick="addPreset('Dance Floor', 'Ft', 14000, 1, '16x16 ft')">+ Dance Floor</button>
+                <button class="chip" onclick="addPreset('Photography', 'Team', 25000, 1, 'Photo & Video')">+ Photography</button>
+                <button class="chip" onclick="addPreset('Food / Catering', 'Plates', 350, 100, '')">+ Food</button>
+                <button class="chip" onclick="addPreset('Magician Show', 'Event', 8000, 1, '')">+ Magician</button>
+            </div>
+        </div>
+
+        <!-- Line Items Table -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 40px;">S.No</th>
+                        <th style="width: 170px;">Item Description</th>
+                        <th style="width: 55px;">UOM</th>
+                        <th style="width: 85px;" class="text-right">Unit Cost (₹)</th>
+                        <th style="width: 50px;" class="text-right">Qty</th>
+                        <th style="width: 100px;" class="text-right">Total Cost (₹)</th>
+                        <th style="width: 220px;">Notes / Specifications</th>
+                        <th class="no-print" style="width: 35px;"></th>
+                    </tr>
+                </thead>
+                <tbody id="billBody">
+                    <!-- Rows injected dynamically -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="btn-group no-print" style="margin-bottom: 12px;">
+            <button class="btn btn-add" onclick="addNewRow()">+ Add Item</button>
+            <button class="btn btn-clear" onclick="clearAllRows()">Clear All</button>
+        </div>
+
+        <!-- Advances & Summary Section -->
+        <div class="action-bar">
+            <div class="advances-container">
+                <div class="advances-header">
+                    <span>Advance Payments History</span>
+                    <button class="btn-adv-add no-print" onclick="addAdvanceRow()" title="Add Another Advance">+</button>
+                </div>
+                <div id="advancesList">
+                    <!-- Advances injected dynamically -->
+                </div>
+            </div>
+
+            <div class="summary-box">
+                <div class="summary-row">
+                    <span>Sub Total:</span>
+                    <span>₹<span id="grandTotalDisplay">0</span></span>
+                </div>
+
+                <div class="summary-row no-print" id="discBtnRow">
+                    <button class="btn-disc-toggle" onclick="showDiscountInput()">+ Add Discount</button>
+                </div>
+
+                <div class="summary-row" id="discInputRow" style="display: none;">
+                    <span>Discount (₹):</span>
+                    <span>- ₹<input type="number" id="discountInput" value="0" oninput="calculateTotals()"></span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Total Advance:</span>
+                    <span>- ₹<span id="totalAdvanceDisplay">0</span></span>
+                </div>
+
+                <div class="summary-row balance">
+                    <span>Balance Due:</span>
+                    <span>₹<span id="balanceDisplay">0</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="custom-notes-box notes-row-hidden" id="notesBoxContainer">
+            <label>Notes / Special Instructions:</label>
+            <textarea id="customNotesInput" placeholder="Enter special instructions or notes..." oninput="autoCap(this); checkNotesText()"></textarea>
+        </div>
+    </div>
+
+    <!-- Standalone Button to Add Terms when hidden -->
+    <div class="no-print" id="addTermsBtnContainer" style="display: none; text-align: left;">
+        <button class="btn-terms-toggle btn-terms-add" onclick="toggleTerms()">+ Add Terms & Conditions</button>
+    </div>
+
+    <!-- Terms & Conditions Section -->
+    <div class="bottom-notes" id="termsBoxContainer">
+        <div class="terms-header-row">
+            <label id="termsHeaderLabel">Terms & Conditions:</label>
+            <button class="btn-terms-toggle btn-terms-remove no-print" id="termsToggleBtn" onclick="toggleTerms()">✕ Remove Terms</button>
+        </div>
+        <ol class="terms-list" id="termsList">
+            <li>Work will be considered confirmed and initiated only after the advance payment is completed.</li>
+            <li>All advance payments are strictly non-refundable under any booking cancellation.</li>
+            <li>Any extra work, extended hours, or additional equipment beyond this agreement will incur extra charges.</li>
+            <li>Full balance payment must be settled on or before the day of the event setup.</li>
+            <li>Any damage to event decor, lighting, or equipment caused by guests will be billed to the client.</li>
+        </ol>
+    </div>
+
+    <!-- SUBMIT & EVENT COMPLETE ACTIONS CONTAINER -->
+    <div class="submit-container no-print">
+        <div style="display: flex; flex-direction: column; width: 100%; gap: 10px;" id="mainActionButtons">
+            <button class="btn btn-submit" onclick="confirmAndSaveEvent(false)">💾 Submit / Save Bill</button>
+            <button class="btn btn-complete" onclick="processEventComplete()">🏁 Mark Event Complete</button>
+        </div>
+
+        <!-- Post-Submit Options -->
+        <div id="postSubmitActions" style="display: none; width: 100%; text-align: center;">
+            <p style="margin: 0 0 10px 0; font-weight: bold; color: #27ae60; font-size: 14px;">🎉 Action Completed Successfully! Select an Export Option:</p>
+            <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                <button class="btn btn-pdf" onclick="sharePDF()">📲 Share PDF</button>
+                <button class="btn btn-jpeg" onclick="downloadJPEG()">🖼️ Download JPEG</button>
+                <button class="btn btn-print" onclick="window.print()">🖨️ Print</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('invDate').valueAsDate = new Date();
+
+    // DUMMY SEED DATA FOR 5 UPCOMING EVENTS
+    function seedDummyEvents() {
+        if (!localStorage.getItem('lalitha_events_db')) {
+            const dummyEvents = [
+                {
+                    id: 'EVT_1001',
+                    custName: 'Rahul Varma',
+                    custAddress: 'Beach Road, Visakhapatnam',
+                    custMobile: '9876543210',
+                    eventName: 'Wedding Reception',
+                    eventVenue: 'Novotel Beach Resort',
+                    eventDate: '2026-11-15',
+                    eventTime: '18:30',
+                    invDate: '2026-09-11',
+                    customNotes: 'Entrance Arch with fresh orchids.',
+                    discount: 2000,
+                    showTerms: true,
+                    billItems: [
+                        { name: "LED Wall Setup", uom: "Sft", unitCost: 140, qty: 432, notes: "8x16 ft" },
+                        { name: "Flower Entrance Arch", uom: "Set", unitCost: 15000, qty: 1, notes: "Orchids & Roses" }
+                    ],
+                    advancePayments: [
+                        { label: "1st Advance", amount: 20000, mode: "PhonePe / GPay", date: "2026-09-11" }
+                    ],
+                    isCompleted: false,
+                    finalBalance: 53480
+                },
+                {
+                    id: 'EVT_1002',
+                    custName: 'Suresh Kumar',
+                    custAddress: 'Gajuwaka, Visakhapatnam',
+                    custMobile: '9123456789',
+                    eventName: 'Sangeet & Mehendi',
+                    eventVenue: 'Gajuwaka Function Hall',
+                    eventDate: '2026-11-28',
+                    eventTime: '17:00',
+                    invDate: '2026-09-11',
+                    customNotes: 'Require cold fire shots during entrance.',
+                    discount: 0,
+                    showTerms: true,
+                    billItems: [
+                        { name: "Dance Floor", uom: "Ft", unitCost: 14000, qty: 1, notes: "16x16 Ft" },
+                        { name: "Cold Fire Machines", uom: "Pair", unitCost: 5500, qty: 2, notes: "Entrance blast" }
+                    ],
+                    advancePayments: [
+                        { label: "1st Advance", amount: 10000, mode: "Cash", date: "2026-09-11" }
+                    ],
+                    isCompleted: false,
+                    finalBalance: 15000
+                },
+                {
+                    id: 'EVT_1003',
+                    custName: 'Priya Sharma',
+                    custAddress: 'Dwaraka Nagar, Visakhapatnam',
+                    custMobile: '9988776655',
+                    eventName: 'Corporate Gala Dinner',
+                    eventVenue: 'Fortune Inn Grand',
+                    eventDate: '2026-12-05',
+                    eventTime: '19:00',
+                    invDate: '2026-09-11',
+                    customNotes: 'Includes sound system setup.',
+                    discount: 1000,
+                    showTerms: false,
+                    billItems: [
+                        { name: "Sound System", uom: "Set", unitCost: 20000, qty: 1, notes: "Linear Tops" },
+                        { name: "LED Counters", uom: "Pcs", unitCost: 5000, qty: 3, notes: "Bar counters" }
+                    ],
+                    advancePayments: [
+                        { label: "1st Advance", amount: 15000, mode: "Bank Transfer", date: "2026-09-11" }
+                    ],
+                    isCompleted: false,
+                    finalBalance: 19000
+                },
+                {
+                    id: 'EVT_1004',
+                    custName: 'Anil Raju',
+                    custAddress: 'MVP Colony, Visakhapatnam',
+                    custMobile: '9440112233',
+                    eventName: 'Haldi Ceremony',
+                    eventVenue: 'Sai Priya Resorts',
+                    eventDate: '2026-12-12',
+                    eventTime: '09:00',
+                    invDate: '2026-09-11',
+                    customNotes: 'Yellow decor theme.',
+                    discount: 0,
+                    showTerms: true,
+                    billItems: [
+                        { name: "Flower Blast", uom: "Shot", unitCost: 3500, qty: 2, notes: "Marigold petals" },
+                        { name: "Fog Machine", uom: "Pair", unitCost: 4000, qty: 1, notes: "Low fog effect" }
+                    ],
+                    advancePayments: [
+                        { label: "1st Advance", amount: 5000, mode: "UPI", date: "2026-09-11" }
+                    ],
+                    isCompleted: false,
+                    finalBalance: 6000
+                },
+                {
+                    id: 'EVT_1005',
+                    custName: 'Kiran Royal',
+                    custAddress: 'Siripuram, Visakhapatnam',
+                    custMobile: '9700112233',
+                    eventName: '1st Birthday Bash',
+                    eventVenue: 'Hotel Green Park',
+                    eventDate: '2026-12-20',
+                    eventTime: '18:00',
+                    invDate: '2026-09-11',
+                    customNotes: 'Magician show scheduled at 7:30 PM.',
+                    discount: 500,
+                    showTerms: true,
+                    billItems: [
+                        { name: "Magician Show", uom: "Event", unitCost: 8000, qty: 1, notes: "45 mins show" },
+                        { name: "Paper Blast", uom: "Shot", unitCost: 3000, qty: 2, notes: "Cake cutting time" }
+                    ],
+                    advancePayments: [
+                        { label: "1st Advance", amount: 5000, mode: "PhonePe / GPay", date: "2026-09-11" }
+                    ],
+                    isCompleted: false,
+                    finalBalance: 8500
+                }
+            ];
+            localStorage.setItem('lalitha_events_db', JSON.stringify(dummyEvents));
+        }
+    }
+
+    seedDummyEvents();
+
+    function autoCap(input) {
+        if (input.value.length > 0) {
+            input.value = input.value.replace(/\b\w/g, char => char.toUpperCase());
+        }
+    }
+
+    function checkNotesText() {
+        const text = document.getElementById('customNotesInput').value.trim();
+        const box = document.getElementById('notesBoxContainer');
+        if (text.length > 0) {
+            box.classList.remove('notes-row-hidden');
+        } else {
+            box.classList.add('notes-row-hidden');
+        }
+    }
+
+    let showTerms = true;
+    function toggleTerms() {
+        showTerms = !showTerms;
+        updateTermsUI();
+    }
+
+    function updateTermsUI() {
+        const termsBox = document.getElementById('termsBoxContainer');
+        const addBtnBox = document.getElementById('addTermsBtnContainer');
+
+        if (showTerms) {
+            termsBox.classList.remove('terms-hidden');
+            addBtnBox.style.display = 'none';
+        } else {
+            termsBox.classList.add('terms-hidden');
+            addBtnBox.style.display = 'block';
+        }
+    }
+
+    let currentEventId = null;
+    let isEventCompleted = false;
+
+    let billItems = [
+        { name: "LED Wall Setup", uom: "Sft", unitCost: 140, qty: 432, notes: "Main Stage (8'x16', 8'x8', 40'x2')" },
+        { name: "Cold Fire Machines", uom: "Pair", unitCost: 5500, qty: 1, notes: "" },
+        { name: "Dance Floor", uom: "Ft", unitCost: 14000, qty: 1, notes: "16x16 Foot" },
+        { name: "Sound System", uom: "Set", unitCost: 20000, qty: 1, notes: "Linear Tops" }
+    ];
+
+    const todayStr = new Date().toISOString().split('T')[0];
+    let advancePayments = [
+        { label: "1st Advance", amount: 10000, mode: "PhonePe / GPay", date: todayStr }
+    ];
+
+    function renderTable() {
+        const tbody = document.getElementById('billBody');
+        tbody.innerHTML = '';
+
+        billItems.forEach((item, idx) => {
+            const lineTotal = (item.unitCost || 0) * (item.qty || 0);
+            const serialNo = idx + 1;
+
+            const row = document.createElement('tr');
+            row.setAttribute('data-index', idx);
+            row.innerHTML = `
+                <td><input type="text" class="cell text-center" value="${serialNo}" readonly style="background:#f5f5f5; font-weight:bold;"></td>
+                <td><input type="text" class="cell" value="${item.name || ''}" oninput="updateData(${idx}, 'name', this); autoCap(this)"></td>
+                <td><input type="text" class="cell" value="${item.uom || ''}" oninput="updateData(${idx}, 'uom', this); autoCap(this)"></td>
+                <td><input type="number" class="cell text-right" value="${item.unitCost || ''}" oninput="updateCalculation(${idx}, 'unitCost', this.value)"></td>
+                <td><input type="number" class="cell text-right" value="${item.qty || ''}" oninput="updateCalculation(${idx}, 'qty', this.value)"></td>
+                <td class="text-right line-total" style="font-weight: bold; padding-right: 6px;">₹${lineTotal.toLocaleString('en-IN')}</td>
+                <td><input type="text" class="cell" value="${item.notes || ''}" oninput="updateData(${idx}, 'notes', this); autoCap(this)"></td>
+                <td class="no-print text-center"><button class="btn-del" onclick="deleteRow(${idx})">✕</button></td>
+            `;
+            tbody.appendChild(row);
+        });
+
+        calculateTotals();
+    }
+
+    function renderAdvances() {
+        const container = document.getElementById('advancesList');
+        container.innerHTML = '';
+
+        advancePayments.forEach((adv, idx) => {
+            const div = document.createElement('div');
+            div.className = 'advance-row';
+            div.innerHTML = `
+                <input type="text" value="${adv.label}" readonly style="width: 25%; font-weight: 600; background: #f0f0f0;">
+                <input type="date" value="${adv.date}" style="width: 28%;" onchange="updateAdvanceField(${idx}, 'date', this.value)">
+                <select style="width: 27%;" onchange="updateAdvanceField(${idx}, 'mode', this.value)">
+                    <option value="Cash" ${adv.mode === 'Cash' ? 'selected' : ''}>Cash</option>
+                    <option value="PhonePe / GPay" ${adv.mode === 'PhonePe / GPay' ? 'selected' : ''}>PhonePe / GPay</option>
+                    <option value="Bank Transfer" ${adv.mode === 'Bank Transfer' ? 'selected' : ''}>Bank Transfer</option>
+                    <option value="Cheque" ${adv.mode === 'Cheque' ? 'selected' : ''}>Cheque</option>
+                    <option value="UPI" ${adv.mode === 'UPI' ? 'selected' : ''}>UPI</option>
+                </select>
+                <input type="number" class="text-right" value="${adv.amount || ''}" placeholder="₹" style="width: 20%; font-weight: 600;" oninput="updateAdvanceAmount(${idx}, this.value)">
+                <button class="btn-del no-print" onclick="deleteAdvanceRow(${idx})">✕</button>
+            `;
+            container.appendChild(div);
+        });
+
+        calculateTotals();
+    }
+
+    function updateData(index, key, inputElem) { billItems[index][key] = inputElem.value; }
+
+    function updateCalculation(index, key, val) {
+        billItems[index][key] = parseFloat(val) || 0;
+        const row = document.querySelector(`tr[data-index="${index}"]`);
+        if (row) {
+            const lineTotal = (billItems[index].unitCost || 0) * (billItems[index].qty || 0);
+            row.querySelector('.line-total').innerText = '₹' + lineTotal.toLocaleString('en-IN');
+        }
+        calculateTotals();
+    }
+
+    function updateAdvanceAmount(idx, val) {
+        advancePayments[idx].amount = parseFloat(val) || 0;
+        calculateTotals();
+    }
+
+    function updateAdvanceField(idx, field, val) {
+        advancePayments[idx][field] = val;
+    }
+
+    function addAdvanceRow() {
+        const nextNum = advancePayments.length + 1;
+        let suffix = nextNum === 1 ? "st" : nextNum === 2 ? "nd" : nextNum === 3 ? "rd" : "th";
+        advancePayments.push({ label: `${nextNum}${suffix} Advance`, amount: 0, mode: "PhonePe / GPay", date: todayStr });
+        renderAdvances();
+    }
+
+    function deleteAdvanceRow(idx) {
+        advancePayments.splice(idx, 1);
+        renderAdvances();
+    }
+
+    function showDiscountInput() {
+        document.getElementById('discBtnRow').style.display = 'none';
+        document.getElementById('discInputRow').style.display = 'flex';
+        document.getElementById('discountInput').focus();
+    }
+
+    function addPreset(name, uom, unitCost, qty, notes) {
+        billItems.push({ name, uom, unitCost, qty, notes });
+        renderTable();
+    }
+
+    function addNewRow() {
+        billItems.push({ name: "", uom: "Pcs", unitCost: 0, qty: 1, notes: "" });
+        renderTable();
+    }
+
+    function deleteRow(idx) {
+        billItems.splice(idx, 1);
+        renderTable();
+    }
+
+    function clearAllRows() {
+        if (confirm("Clear all bill entries?")) {
+            billItems = [];
+            renderTable();
+        }
+    }
+
+    function calculateTotals() {
+        const grandTotal = billItems.reduce((acc, item) => acc + ((item.unitCost || 0) * (item.qty || 0)), 0);
+        const discountInput = document.getElementById('discountInput');
+        const discount = parseFloat(discountInput.value) || 0;
+        const totalAdvance = advancePayments.reduce((acc, adv) => acc + (adv.amount || 0), 0);
+        
+        const balance = grandTotal - discount - totalAdvance;
+
+        document.getElementById('grandTotalDisplay').innerText = grandTotal.toLocaleString('en-IN');
+        document.getElementById('totalAdvanceDisplay').innerText = totalAdvance.toLocaleString('en-IN');
+        document.getElementById('balanceDisplay').innerText = balance.toLocaleString('en-IN');
+
+        const discRow = document.getElementById('discInputRow');
+        if (discount > 0) {
+            discRow.classList.remove('discount-row-hidden');
+            document.getElementById('discBtnRow').style.display = 'none';
+            discRow.style.display = 'flex';
+        } else {
+            discRow.classList.add('discount-row-hidden');
+        }
+
+        return { grandTotal, discount, totalAdvance, balance };
+    }
+
+    // --- SEARCH & LOCAL STORAGE FUNCTIONS --- //
+
+    function getSavedEvents() {
+        return JSON.parse(localStorage.getItem('lalitha_events_db') || '[]');
+    }
+
+    function showUpcomingDropdown() {
+        const inputVal = document.getElementById('searchInput').value.trim();
+        if (inputVal.length >= 2) {
+            handleSearch();
+            return;
+        }
+
+        const events = getSavedEvents();
+        const resultsDiv = document.getElementById('searchResults');
+
+        if (events.length === 0) {
+            resultsDiv.innerHTML = '<div class="search-result-item">No saved events found. Submit a bill first.</div>';
+            resultsDiv.style.display = 'block';
+            return;
+        }
+
+        const sorted = events.sort((a, b) => new Date(a.eventDate || '9999-12-31') - new Date(b.eventDate || '9999-12-31'));
+
+        resultsDiv.innerHTML = `
+            <div style="padding: 8px 12px; font-weight: bold; font-size: 11px; background: #e9ecef; color: #495057;">
+                📅 SELECT UPCOMING / SAVED EVENT TO EDIT (${sorted.length} AVAILABLE):
+            </div>
+            ` + sorted.map(evt => `
+                <div class="search-result-item" onclick="loadEvent('${evt.id}')">
+                    <strong>${evt.custName || 'Client'}</strong> (${evt.custMobile || 'No Mobile'}) - ${evt.eventName || 'Event'}<br>
+                    <small>📅 Date: <strong>${evt.eventDate || 'N/A'}</strong> | 📍 Venue: ${evt.eventVenue || 'N/A'} | Status: ${evt.isCompleted ? 'COMPLETED' : 'PENDING'}</small>
+                </div>
+            `).join('');
+
+        resultsDiv.style.display = 'block';
+    }
+
+    function handleSearch() {
+        const query = document.getElementById('searchInput').value.trim().toLowerCase();
+        const resultsDiv = document.getElementById('searchResults');
+        
+        if (query.length === 0) {
+            showUpcomingDropdown();
+            return;
+        }
+
+        const events = getSavedEvents();
+        const matches = events.filter(evt => 
+            (evt.custMobile && evt.custMobile.includes(query)) ||
+            (evt.eventDate && evt.eventDate.toLowerCase().includes(query)) ||
+            (evt.eventVenue && evt.eventVenue.toLowerCase().includes(query)) ||
+            (evt.custName && evt.custName.toLowerCase().includes(query))
+        );
+
+        if (matches.length === 0) {
+            resultsDiv.innerHTML = '<div class="search-result-item">No matching events found.</div>';
+        } else {
+            resultsDiv.innerHTML = matches.map(evt => `
+                <div class="search-result-item" onclick="loadEvent('${evt.id}')">
+                    <strong>${evt.custName || 'Client'}</strong> (${evt.custMobile || 'No Mobile'}) - ${evt.eventName || 'Event'}<br>
+                    <small>📅 Date: <strong>${evt.eventDate || 'N/A'}</strong> | 📍 Venue: ${evt.eventVenue || 'N/A'} | Status: ${evt.isCompleted ? 'COMPLETED' : 'PENDING'}</small>
+                </div>
+            `).join('');
+        }
+        resultsDiv.style.display = 'block';
+    }
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.search-container')) {
+            document.getElementById('searchResults').style.display = 'none';
+        }
+    });
+
+    function saveEventToStorage(isComplete) {
+        let events = getSavedEvents();
+        if (!currentEventId) {
+            currentEventId = 'EVT_' + Date.now();
+        }
+
+        const totals = calculateTotals();
+        const eventData = {
+            id: currentEventId,
+            custName: document.getElementById('custName').value,
+            custAddress: document.getElementById('custAddress').value,
+            custMobile: document.getElementById('custMobile').value,
+            eventName: document.getElementById('eventName').value,
+            eventVenue: document.getElementById('eventVenue').value,
+            eventDate: document.getElementById('eventDate').value,
+            eventTime: document.getElementById('eventTime').value,
+            invDate: document.getElementById('invDate').value,
+            customNotes: document.getElementById('customNotesInput').value,
+            discount: document.getElementById('discountInput').value,
+            showTerms: showTerms,
+            billItems: billItems,
+            advancePayments: advancePayments,
+            isCompleted: isComplete,
+            finalBalance: totals.balance
+        };
+
+        const existingIndex = events.findIndex(e => e.id === currentEventId);
+        if (existingIndex >= 0) {
+            events[existingIndex] = eventData;
+        } else {
+            events.push(eventData);
+        }
+
+        localStorage.setItem('lalitha_events_db', JSON.stringify(events));
+    }
+
+    function loadEvent(eventId) {
+        const events = getSavedEvents();
+        const evt = events.find(e => e.id === eventId);
+        if (!evt) return;
+
+        currentEventId = evt.id;
+        isEventCompleted = evt.isCompleted;
+
+        document.getElementById('custName').value = evt.custName || '';
+        document.getElementById('custAddress').value = evt.custAddress || '';
+        document.getElementById('custMobile').value = evt.custMobile || '';
+        document.getElementById('eventName').value = evt.eventName || '';
+        document.getElementById('eventVenue').value = evt.eventVenue || '';
+        document.getElementById('eventDate').value = evt.eventDate || '';
+        document.getElementById('eventTime').value = evt.eventTime || '';
+        document.getElementById('invDate').value = evt.invDate || '';
+        document.getElementById('customNotesInput').value = evt.customNotes || '';
+        document.getElementById('discountInput').value = evt.discount || 0;
+
+        showTerms = evt.showTerms !== undefined ? evt.showTerms : true;
+        updateTermsUI();
+
+        billItems = evt.billItems || [];
+        advancePayments = evt.advancePayments || [];
+
+        renderTable();
+        renderAdvances();
+        checkNotesText();
+
+        const stamp = document.getElementById('statusStamp');
+        if (isEventCompleted) {
+            stamp.className = 'status-stamp stamp-complete';
+            stamp.innerText = 'STATUS: EVENT COMPLETED';
+        } else {
+            stamp.className = 'status-stamp stamp-pending';
+            stamp.innerText = 'STATUS: PENDING';
+        }
+
+        document.getElementById('searchResults').style.display = 'none';
+        document.getElementById('searchInput').value = '';
+    }
+
+    // --- SAVE AND COMPLETE WORKFLOW --- //
+
+    function confirmAndSaveEvent(isComplete) {
+        if (confirm("Are you sure you want to submit and save this bill?")) {
+            saveEventToStorage(isComplete);
+            document.getElementById('mainActionButtons').style.display = 'none';
+            document.getElementById('postSubmitActions').style.display = 'block';
+        }
+    }
+
+    function processEventComplete() {
+        const totals = calculateTotals();
+        
+        const confirmFirst = confirm("Are you sure you want to mark this event as COMPLETE?");
+        if (!confirmFirst) return;
+
+        const finalInput = prompt(`Event Completion Payment Check:\nCurrent Balance Due: ₹${totals.balance}\n\nEnter Final Payment Amount received right now (₹):`, totals.balance);
+
+        if (finalInput === null) return;
+
+        const finalPaid = parseFloat(finalInput) || 0;
+        
+        if (finalPaid > 0) {
+            advancePayments.push({
+                label: "Final Settlement",
+                amount: finalPaid,
+                mode: "Cash",
+                date: todayStr
+            });
+            renderAdvances();
+        }
+
+        const newTotals = calculateTotals();
+
+        if (newTotals.balance <= 0) {
+            alert("✅ Full payment is done! Event is completely settled.");
+        } else {
+            alert(`⚠️ Warning: Payment is NOT complete! Remaining Balance: ₹${newTotals.balance.toLocaleString('en-IN')}`);
+        }
+
+        const stamp = document.getElementById('statusStamp');
+        stamp.className = 'status-stamp stamp-complete';
+        stamp.innerText = newTotals.balance <= 0 ? 'COMPLETED - FULL PAYMENT SETTLED' : `COMPLETED - DUE: ₹${newTotals.balance}`;
+
+        isEventCompleted = true;
+        saveEventToStorage(true);
+
+        document.getElementById('mainActionButtons').style.display = 'none';
+        document.getElementById('postSubmitActions').style.display = 'block';
+    }
+
+    // Capture Canvas in Strict A4 Format
+    function captureA4Canvas(callback) {
+        const card = document.getElementById('billInvoiceCard');
+        card.classList.add('quotation-mode');
+
+        const noPrintElems = card.querySelectorAll('.no-print');
+        noPrintElems.forEach(el => el.style.display = 'none');
+
+        html2canvas(card, {
+            scale: 2,
+            useCORS: true,
+            width: 820,
+            height: 1123
+        }).then(canvas => {
+            card.classList.remove('quotation-mode');
+            noPrintElems.forEach(el => el.style.display = '');
+            callback(canvas);
+        });
+    }
+
+    // 1. Share PDF in Strict A4 Format
+    function sharePDF() {
+        captureA4Canvas(canvas => {
+            const imgData = canvas.toDataURL('image/jpeg', 0.95);
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
+            
+            const pdfBlob = pdf.output('blob');
+            const file = new File([pdfBlob], 'Lalitha_Event_Decors_Quotation.pdf', { type: 'application/pdf' });
+
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                navigator.share({
+                    files: [file],
+                    title: 'Lalitha Event Decors Quotation',
+                    text: 'Here is your event quotation from Lalitha Event Decors.'
+                }).catch(() => pdf.save('Lalitha_Event_Decors_Quotation.pdf'));
+            } else {
+                pdf.save('Lalitha_Event_Decors_Quotation.pdf');
+            }
+        });
+    }
+
+    // 2. Download JPEG in Strict A4 Format
+    function downloadJPEG() {
+        captureA4Canvas(canvas => {
+            const link = document.createElement('a');
+            link.download = 'Lalitha_Event_Decors_Quotation.jpg';
+            link.href = canvas.toDataURL('image/jpeg', 0.95);
+            link.click();
+        });
+    }
+
+    renderTable();
+    renderAdvances();
+    checkNotesText();
+    updateTermsUI();
+</script>
+
+</body>
+</html>
