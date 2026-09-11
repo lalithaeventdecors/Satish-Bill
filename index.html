@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VAYU WEDDING PLANNERS - Quotation</title>
+    <title>Lalitha Event Decors - Quotation</title>
     <!-- External Libraries for Exporting JPG & PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -12,132 +12,165 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f7f9fa;
+            background-color: #f4f6f8;
             margin: 0;
-            padding: 10px;
-            color: #222;
+            padding: 8px;
+            padding-bottom: 110px; /* Space for sticky bottom bar */
+            color: #1a202c;
             font-size: 14px;
         }
 
         .card {
             width: 100%;
-            max-width: 800px;
+            max-width: 600px;
             margin: auto;
             background: #ffffff;
-            border-radius: 8px;
-            border: 1px solid #d1d5db;
+            border-radius: 12px;
+            border: 1px solid #cbd5e0;
             padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(27, 67, 50, 0.08);
         }
 
         /* Top Bar */
         .top-action-bar {
             width: 100%;
-            max-width: 800px;
-            margin: 0 auto 6px auto;
+            max-width: 600px;
+            margin: 0 auto 8px auto;
             display: flex;
             justify-content: flex-end;
-            gap: 8px;
+            gap: 6px;
         }
         .btn-top-action {
             background: #ffffff;
             border: 1px solid #cbd5e0;
-            color: #2d3748;
-            padding: 6px 12px;
-            border-radius: 18px;
-            font-size: 12px;
+            color: #1b4332;
+            padding: 6px 10px;
+            border-radius: 16px;
+            font-size: 11px;
             font-weight: 700;
             cursor: pointer;
         }
         .btn-reload-action { background: #fff5f5; border-color: #feb2b2; color: #c53030; }
+        .btn-pricelist-action { background: #f0fdf4; border-color: #bbf7d0; color: #166534; }
 
-        /* Modal Overlay */
+        /* Modal Overlays */
         .search-modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.55);
             z-index: 2000;
             display: none;
             justify-content: center;
-            align-items: flex-start;
-            padding: 12px;
+            align-items: center;
+            padding: 8px;
         }
         .search-modal-card {
             background: #ffffff;
-            border-radius: 8px;
-            width: 100%;
+            border-radius: 12px;
+            width: 95%;
             max-width: 500px;
-            padding: 14px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            max-height: 85vh;
+            gap: 10px;
+            max-height: 92vh;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 6px; }
-        .modal-title { font-size: 13px; font-weight: 800; color: #2d3748; text-transform: uppercase; }
-        .btn-close-modal { background: #e53e3e; color: #fff; border: none; border-radius: 50%; width: 26px; height: 26px; font-weight: bold; cursor: pointer; font-size: 13px; }
-        .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; }
-        .filter-chip { padding: 4px 8px; border-radius: 12px; border: 1px solid #cbd5e0; background: #f7fafc; font-size: 11px; font-weight: 700; cursor: pointer; }
-        .filter-chip.active { background: #3182ce; color: #fff; border-color: #3182ce; }
-        .modal-search-input { width: 100%; padding: 8px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 14px; }
-        .search-results-list { overflow-y: auto; max-height: 50vh; display: flex; flex-direction: column; gap: 6px; }
-        .search-result-item { padding: 8px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 12px; background: #f7fafc; cursor: pointer; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #edf2f7; padding-bottom: 6px; }
+        .modal-title { font-size: 13px; font-weight: 900; color: #1b4332; text-transform: uppercase; letter-spacing: 0.5px; }
+        .btn-close-modal { background: #f1f5f9; color: #475569; border: none; border-radius: 50%; width: 30px; height: 30px; font-weight: bold; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; }
+        
+        .filter-bar { display: flex; gap: 4px; flex-wrap: wrap; background: #f8fafc; padding: 6px; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .filter-chip { padding: 5px 10px; border-radius: 6px; border: 1px solid transparent; background: transparent; font-size: 11px; font-weight: 700; cursor: pointer; color: #475569; }
+        .filter-chip.active { background: #1b4332; color: #ffffff; }
+
+        /* Responsive Price List Item Card */
+        .pl-item-card {
+            background: #f8fafc;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .pl-row-1 { display: flex; gap: 6px; align-items: center; }
+        .pl-row-2 { display: grid; grid-template-columns: 1fr 1.3fr 1fr; gap: 6px; align-items: center; }
+        
+        .pl-field-group { display: flex; flex-direction: column; gap: 2px; }
+        .pl-field-group label { font-size: 9px; font-weight: 800; color: #475569; text-transform: uppercase; }
+        .pl-input { width: 100%; padding: 6px 8px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 13px; font-weight: 600; background: #fff; color: #1a202c; }
+
+        .search-results-list { overflow-y: auto; max-height: 55vh; display: flex; flex-direction: column; gap: 8px; padding-right: 2px; }
+        .search-result-item { padding: 8px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 12px; background: #f8fafc; display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+        .search-result-item:hover { background: #f1f5f9; }
 
         /* Header */
-        .header { border-bottom: 2px solid #cbd5e0; padding-bottom: 6px; display: flex; justify-content: space-between; align-items: flex-start; }
-        .brand-logo { max-height: 48px; width: auto; object-fit: contain; }
-        .brand-title { margin: 0; font-size: 16px; color: #1a202c; text-transform: uppercase; font-weight: 900; letter-spacing: 0.5px; }
-        .brand-address { display: none; margin: 2px 0 0 0; font-size: 9px; color: #555; line-height: 1.2; }
-        .quotation-badge { font-size: 12px; font-weight: 800; color: #4a5568; text-transform: uppercase; text-align: right; }
-        .bill-id-display { font-size: 12px; font-weight: 900; color: #2d3748; margin-top: 1px; }
-        .status-stamp { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800; text-transform: uppercase; margin-top: 2px; }
-        .stamp-estimation { background: #edf2f7; color: #4a5568; border: 1px solid #cbd5e0; }
+        .header { border-bottom: 2px solid #1b4332; padding-bottom: 6px; display: flex; justify-content: space-between; align-items: flex-start; }
+        .brand-logo { max-height: 42px; width: auto; object-fit: contain; }
+        .brand-title { margin: 0; font-size: 15px; color: #1b4332; text-transform: uppercase; font-weight: 900; }
+        .brand-address { display: none; margin: 2px 0 0 0; font-size: 9px; color: #475569; }
+        .quotation-badge { font-size: 11px; font-weight: 800; color: #b7791f; text-transform: uppercase; text-align: right; }
+        .bill-id-display { font-size: 11px; font-weight: 900; color: #1a202c; }
+        .status-stamp { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: 800; text-transform: uppercase; margin-top: 2px; }
+        .stamp-estimation { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e0; }
         .stamp-pending { background: #fefcbf; color: #744210; border: 1px solid #faf089; }
-        .stamp-complete { background: #c6f6d5; color: #22543d; border: 1px solid #9ae6b4; }
+        .stamp-complete { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
 
-        /* Client Grid */
-        .client-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: #f8fafc; padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0; }
-        @media (max-width: 600px) { .client-grid { grid-template-columns: 1fr; } }
+        /* Client Section & Collapsible */
+        .client-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1b4332;
+            padding: 7px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 800;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+        .client-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: #f8fafc; padding: 8px; border-radius: 6px; border: 1px solid #cbd5e0; margin-top: 4px; }
+        @media (max-width: 500px) { .client-grid { grid-template-columns: 1fr; } }
         .field { display: flex; flex-direction: column; gap: 2px; }
-        .field label { font-size: 10px; font-weight: 800; color: #4a5568; text-transform: uppercase; }
-        .field input { padding: 6px 8px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 14px; background: #fff; }
+        .field label { font-size: 9px; font-weight: 800; color: #475569; text-transform: uppercase; }
+        .field input { padding: 7px 8px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 13px; background: #fff; font-weight: 600; color: #1a202c; }
 
         /* FAVORITES BAR */
-        .presets-bar { background: #fffaf0; border: 1px solid #feebc8; padding: 6px; border-radius: 6px; margin-bottom: 4px; }
-        .presets-title-bar { display: flex; justify-content: space-between; align-items: center; font-size: 10px; font-weight: 800; color: #975a16; text-transform: uppercase; cursor: pointer; }
-        .fav-category-tabs { display: flex; gap: 4px; margin-top: 4px; border-bottom: 1px solid #feebc8; padding-bottom: 3px; overflow-x: auto; }
-        .fav-tab { padding: 4px 8px; font-size: 11px; font-weight: 700; color: #975a16; background: #fefcbf; border-radius: 4px; cursor: pointer; white-space: nowrap; border: 1px solid #f6e05e; }
-        .fav-tab.active { background: #d69e2e; color: #ffffff; border-color: #b7791f; }
+        .presets-bar { background: #fffbeb; border: 1px solid #fde68a; padding: 6px; border-radius: 6px; margin-bottom: 4px; }
+        .presets-title-bar { display: flex; justify-content: space-between; align-items: center; font-size: 10px; font-weight: 800; color: #b7791f; text-transform: uppercase; cursor: pointer; }
+        .fav-category-tabs { display: flex; gap: 4px; margin-top: 4px; border-bottom: 1px solid #fde68a; padding-bottom: 3px; overflow-x: auto; }
+        .fav-tab { padding: 4px 8px; font-size: 11px; font-weight: 700; color: #92400e; background: #fef3c7; border-radius: 4px; cursor: pointer; white-space: nowrap; border: 1px solid #f59e0b; }
+        .fav-tab.active { background: #d97706; color: #ffffff; border-color: #b45309; }
         
         .fav-content-panel { display: none; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
         .fav-content-panel.active { display: flex; }
         
         .chip { 
             background-color: #ffffff; 
-            border: 1px solid #d69e2e; 
-            color: #2d3748; 
-            padding: 4px 8px; 
+            border: 1px solid #d97706; 
+            color: #1a202c; 
+            padding: 5px 9px; 
             border-radius: 12px; 
-            font-size: 12px; 
+            font-size: 11px; 
             font-weight: 700; 
             cursor: pointer; 
             display: inline-flex;
             align-items: center;
             gap: 4px;
         }
-        .chip:hover { background: #fffaf0; }
-        .chip-add-btn { background-color: #38a169; border-color: #38a169; color: #ffffff; }
-        .chip-del-icon { color: #e53e3e; font-weight: bold; font-size: 11px; padding: 0 2px; cursor: pointer; }
 
-        /* Event Category Blocks */
+        /* MOBILE STACKED ITEM CARDS */
         .event-category-section {
             background: #ffffff;
             border: 1px solid #cbd5e0;
-            border-radius: 6px;
-            padding: 6px;
-            margin-bottom: 6px;
+            border-radius: 8px;
+            padding: 8px;
+            margin-bottom: 8px;
             display: flex;
             flex-direction: column;
             gap: 6px;
@@ -146,98 +179,135 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #f7fafc;
-            padding: 4px 6px;
-            border-radius: 4px;
-            border: 1px solid #e2e8f0;
+            background: #f1f5f9;
+            padding: 6px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e0;
             gap: 6px;
             flex-wrap: wrap;
         }
         .event-category-title-input {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 800;
             border: 1px solid #cbd5e0;
-            padding: 4px 6px;
+            padding: 5px 6px;
             border-radius: 4px;
             width: 100%;
             background: #fff;
+            color: #1a202c;
         }
 
-        /* Table */
-        .table-container { overflow-x: auto; }
-        table { width: 100%; min-width: 700px; border-collapse: collapse; table-layout: fixed; }
-        th { background-color: #2d3748; color: #ffffff; padding: 6px 4px; font-size: 10px; text-align: left; text-transform: uppercase; font-weight: 700; }
-        td { padding: 3px 4px; border-bottom: 1px solid #edf2f7; vertical-align: top; }
-        input.cell { width: 100%; border: 1px solid #cbd5e0; padding: 5px 4px; font-size: 13px; border-radius: 4px; background: #fff; font-weight: 600; }
-        .text-right { text-align: right; }
-        .text-center { text-align: center; }
+        .mobile-item-card {
+            background: #f8fafc;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 6px;
+            position: relative;
+        }
+        .mic-top-row { display: flex; gap: 6px; align-items: center; }
+        .mic-sno { background: #e2e8f0; font-weight: 800; text-align: center; font-size: 11px; border-radius: 4px; padding: 6px 4px; width: 32px; border: 1px solid #cbd5e0; color: #334155; }
+        .mic-name { flex: 1; }
+        .mic-uom { width: 65px; }
+        
+        .mic-bottom-row { display: grid; grid-template-columns: 1fr 1fr 1fr auto auto; gap: 6px; align-items: center; }
+        @media (max-width: 450px) {
+            .mic-bottom-row { grid-template-columns: 1fr 1fr auto auto; }
+            .mic-notes-group { grid-column: span 2; }
+        }
+        .mic-group { display: flex; flex-direction: column; gap: 2px; }
+        .mic-group label { font-size: 8px; font-weight: 800; color: #475569; text-transform: uppercase; }
+        .mic-input { width: 100%; padding: 6px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 13px; font-weight: 600; background: #fff; color: #1a202c; }
 
-        /* Buttons */
         .btn-group { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 4px; }
-        .btn { padding: 7px 12px; border: none; border-radius: 6px; font-weight: 700; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
-        .btn-add { background-color: #38a169; color: #fff; }
-        .btn-clear { background-color: #e53e3e; color: #fff; }
-        .btn-estimation { background-color: #718096; color: #fff; font-size: 13px; padding: 8px 12px; width: 100%; }
-        .btn-submit { background-color: #3182ce; color: #fff; font-size: 13px; padding: 8px 12px; width: 100%; }
-        .btn-update { background-color: #d69e2e; color: #fff; font-size: 13px; padding: 8px 12px; width: 100%; }
-        .btn-complete { background-color: #38a169; color: #fff; font-size: 13px; padding: 8px 12px; width: 100%; }
-        .btn-print { background-color: #2d3748; color: #fff; }
-        .btn-pdf { background-color: #38a169; color: #fff; }
-        .btn-jpeg { background-color: #dd6b20; color: #fff; }
-        .btn-terms-toggle { font-size: 10px; padding: 4px 8px; border-radius: 4px; border: none; cursor: pointer; font-weight: 700; }
-        .btn-terms-add { background-color: #38a169; color: #fff; }
-        .btn-terms-remove { background-color: #805ad5; color: #fff; }
-        .btn-del { background-color: #fed7d7; color: #c53030; padding: 4px 8px; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; font-size: 12px; }
+        .btn { padding: 9px 12px; border: none; border-radius: 6px; font-weight: 700; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; color: #ffffff !important; white-space: nowrap; }
+        .btn-add { background-color: #1b4332; color: #ffffff !important; }
+        .btn-clear { background-color: #dc2626; color: #ffffff !important; }
+        .btn-estimation { background-color: #334155; color: #ffffff !important; font-size: 12px; padding: 9px; flex: 1; border: 1px solid #64748b; }
+        .btn-submit { background-color: #2e6f40; color: #ffffff !important; font-size: 12px; padding: 9px; flex: 1; border: 1px solid #4ade80; }
+        .btn-update { background-color: #d97706; color: #ffffff !important; font-size: 12px; padding: 9px; flex: 1; }
+        .btn-complete { background-color: #166534; color: #ffffff !important; font-size: 12px; padding: 9px; flex: 1; }
+        .btn-print { background-color: #334155; color: #ffffff !important; }
+        .btn-pdf { background-color: #0d9488; color: #ffffff !important; }
+        .btn-jpeg { background-color: #d97706; color: #ffffff !important; }
+        .btn-whatsapp { background-color: #15803d; color: #ffffff !important; }
+        .btn-terms-toggle { font-size: 10px; padding: 4px 8px; border-radius: 4px; border: none; cursor: pointer; font-weight: 700; color: #fff !important; }
+        .btn-terms-add { background-color: #1b4332; }
+        .btn-terms-remove { background-color: #6b21a8; }
+        .btn-del { background-color: #fee2e2; color: #dc2626; padding: 6px 10px; border-radius: 4px; border: 1px solid #fecaca; cursor: pointer; font-weight: bold; font-size: 11px; }
+        .btn-row-clear { background-color: #f1f5f9; color: #334155; border: 1px solid #cbd5e0; padding: 6px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; }
 
-        /* Summary & Action Bar */
-        .submit-container { padding: 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; display: flex; flex-direction: column; gap: 6px; }
-        .action-bar { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; flex-wrap: wrap; }
-        .advances-container { flex: 1.5; width: 100%; background: #ffffff; padding: 6px; border-radius: 6px; border: 1px solid #e2e8f0; }
-        .advances-header { display: flex; justify-content: space-between; align-items: center; font-size: 10px; font-weight: 800; color: #2d3748; margin-bottom: 4px; text-transform: uppercase; }
-        .btn-adv-add { background: #38a169; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; font-weight: bold; cursor: pointer; }
+        /* STICKY BOTTOM SUMMARY & ACTIONS BAR */
+        .sticky-bottom-bar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: #1b4332;
+            color: #ffffff;
+            padding: 8px 12px;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.25);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-width: 600px;
+            margin: 0 auto;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            border-top: 2px solid #d97706;
+        }
+        .sticky-summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .sticky-summary-row.balance {
+            font-size: 14px;
+            font-weight: 900;
+            color: #fde047;
+            border-top: 1px solid #2d6a4f;
+            padding-top: 3px;
+        }
+        .sticky-actions {
+            display: flex;
+            gap: 6px;
+            width: 100%;
+        }
+
+        /* Advances */
+        .action-bar { display: flex; flex-direction: column; gap: 6px; background: #f8fafc; padding: 8px; border-radius: 6px; border: 1px solid #cbd5e0; }
+        .advances-container { width: 100%; background: #ffffff; padding: 6px; border-radius: 6px; border: 1px solid #cbd5e0; }
+        .advances-header { display: flex; justify-content: space-between; align-items: center; font-size: 10px; font-weight: 800; color: #1b4332; margin-bottom: 4px; text-transform: uppercase; }
+        .btn-adv-add { background: #1b4332; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; font-weight: bold; cursor: pointer; }
         .advance-row { display: flex; gap: 4px; margin-bottom: 4px; align-items: center; }
-        .advance-row input, .advance-row select { padding: 4px 6px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 12px; font-weight: 600; }
+        .advance-row input, .advance-row select { padding: 5px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 11px; font-weight: 600; color: #1a202c; }
 
-        .summary-box { background: #2d3748; color: #fff; padding: 8px 10px; border-radius: 6px; width: 100%; display: flex; flex-direction: column; gap: 4px; }
-        .summary-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700; }
-        .summary-row input { width: 80px; padding: 2px 4px; border: 1px solid #4a5568; border-radius: 4px; background: #1a202c; color: #fff; font-weight: bold; text-align: right; font-size: 13px; }
-        .btn-disc-toggle { background: #d69e2e; color: #fff; border: none; padding: 3px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; cursor: pointer; }
-        .summary-row.balance { font-size: 14px; font-weight: 900; color: #48bb78; border-top: 1px solid #4a5568; padding-top: 4px; }
-
-        /* Notes & Terms Box */
-        .custom-notes-box, .bottom-notes { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px; }
-        .custom-notes-box label, .bottom-notes label { font-size: 10px; font-weight: 800; color: #2d3748; text-transform: uppercase; display: block; margin-bottom: 2px; }
-        .custom-notes-box textarea { width: 100%; height: 36px; border: 1px solid #cbd5e0; border-radius: 4px; padding: 6px; font-size: 13px; resize: none; font-weight: 600; }
-        .terms-list { margin: 2px 0 0 0; padding-left: 14px; font-size: 10px; color: #4a5568; line-height: 1.3; font-weight: 600; }
+        /* Notes & Terms */
+        .custom-notes-box, .bottom-notes { background: #f8fafc; border: 1px solid #cbd5e0; border-radius: 6px; padding: 6px; }
+        .custom-notes-box label, .bottom-notes label { font-size: 10px; font-weight: 800; color: #1b4332; text-transform: uppercase; display: block; margin-bottom: 2px; }
+        .custom-notes-box textarea { width: 100%; height: 36px; border: 1px solid #cbd5e0; border-radius: 4px; padding: 6px; font-size: 12px; resize: none; font-weight: 600; color: #1a202c; }
+        .terms-list { margin: 2px 0 0 0; padding-left: 14px; font-size: 10px; color: #334155; line-height: 1.4; font-weight: 600; }
+        .terms-list li { margin-bottom: 2px; position: relative; }
+        .term-del-btn { background: none; border: none; color: #dc2626; font-weight: bold; cursor: pointer; font-size: 10px; margin-left: 4px; }
         .terms-hidden { display: none !important; }
 
         .quotation-mode input, .quotation-mode select, .quotation-mode textarea { border: none !important; background: transparent !important; padding: 0 !important; box-shadow: none !important; font-weight: 700 !important; color: #000 !important; appearance: none !important; }
         .quotation-mode .brand-address { display: block !important; }
+        .quotation-mode .term-del-btn { display: none !important; }
 
-        /* Print Settings - Minimal Space & Single Page Compression */
+        /* Print Settings */
         @media print {
             @page { size: A4 portrait !important; margin: 4mm 6mm !important; }
             html, body { width: 210mm !important; height: auto !important; margin: 0 !important; padding: 0 !important; background: #fff !important; font-size: 10.5px !important; color: #000 !important; }
-            .no-print, .top-action-bar, .presets-bar, .btn-del, .btn-adv-add, .btn-disc-toggle, .submit-container, .btn-terms-toggle { display: none !important; }
+            .no-print, .top-action-bar, .presets-bar, .sticky-bottom-bar, .btn-del, .btn-row-clear, .client-section-header { display: none !important; }
+            .client-grid { display: grid !important; background: transparent !important; border: 1px solid #000 !important; padding: 4px !important; }
             .brand-address { display: block !important; }
-            .brand-logo { max-height: 38px !important; }
-            .card { width: 100% !important; max-width: 100% !important; box-shadow: none !important; padding: 4px !important; border-radius: 0 !important; margin: 0 !important; border: none !important; gap: 4px !important; }
-            .client-grid { background: transparent !important; border: 1px solid #000 !important; padding: 4px !important; gap: 4px !important; }
-            .field input { padding: 2px 4px !important; font-size: 11px !important; height: 18px !important; }
-            table { border: 1px solid #000 !important; width: 100% !important; }
-            th { background: #edf2f7 !important; color: #000 !important; border: 1px solid #000 !important; font-size: 9.5px !important; padding: 3px 2px !important; }
-            td { border: 1px solid #000 !important; padding: 2px 3px !important; font-size: 10.5px !important; }
-            input.cell { border: none !important; background: transparent !important; padding: 1px !important; font-size: 10.5px !important; height: auto !important; }
-            .event-category-section { border: none !important; background: transparent !important; padding: 0 !important; margin-bottom: 4px !important; gap: 3px !important; }
-            .event-category-header { background: #edf2f7 !important; border: 1px solid #000 !important; padding: 3px 4px !important; }
-            .event-category-title-input { border: none !important; background: transparent !important; font-size: 11px !important; padding: 0 !important; }
-            .summary-box { background: transparent !important; color: #000 !important; border: 1px solid #000 !important; padding: 4px 6px !important; }
-            .summary-row input { border: none !important; color: #000 !important; background: transparent !important; }
-            .action-bar { gap: 4px !important; }
-            .advances-container { padding: 4px !important; border: 1px solid #000 !important; }
-            .advance-row input, .advance-row select { border: none !important; background: transparent !important; padding: 1px !important; font-size: 10.5px !important; }
-            .custom-notes-box, .bottom-notes { padding: 4px !important; border: 1px solid #000 !important; margin-top: 2px !important; }
-            .custom-notes-box textarea { border: none !important; background: transparent !important; height: 26px !important; padding: 0 !important; font-size: 10.5px !important; }
+            .card { width: 100% !important; max-width: 100% !important; box-shadow: none !important; padding: 4px !important; border: none !important; }
+            .mobile-item-card { background: transparent !important; border: 1px solid #000 !important; padding: 3px !important; margin-bottom: 4px !important; }
         }
     </style>
 </head>
@@ -245,8 +315,32 @@
 
 <!-- TOP ACTION BAR -->
 <div class="top-action-bar no-print">
-    <button class="btn-top-action btn-reload-action" onclick="confirmReloadPage()">🔄 New Bill</button>
+    <button class="btn-top-action btn-pricelist-action" onclick="openPriceListModal()">📋 Price List</button>
     <button class="btn-top-action" onclick="openSearchModal()">🔍 Search</button>
+    <button class="btn-top-action btn-reload-action" onclick="confirmReloadPage()">🔄 New Bill</button>
+</div>
+
+<!-- PRICE LIST MODAL POPUP -->
+<div class="search-modal-overlay" id="priceListModal">
+    <div class="search-modal-card">
+        <div class="modal-header">
+            <span class="modal-title">📋 Manage Price List & Defaults</span>
+            <button class="btn-close-modal" onclick="closePriceListModal()">✕</button>
+        </div>
+        
+        <div class="filter-bar">
+            <span class="filter-chip active" id="plTabEvents" onclick="switchPriceListTab('tabEvents')">Events</span>
+            <span class="filter-chip" id="plTabSpecial" onclick="switchPriceListTab('tabSpecial')">Special</span>
+            <span class="filter-chip" id="plTabCatering" onclick="switchPriceListTab('tabCatering')">Catering</span>
+            <span class="filter-chip" id="plTabDecor" onclick="switchPriceListTab('tabDecor')">Decor</span>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end;">
+            <button class="btn btn-add" style="padding: 6px 12px; font-size: 11px;" onclick="addNewPriceListItem()">➕ Add Item</button>
+        </div>
+
+        <div class="search-results-list" id="priceListTableContainer"></div>
+    </div>
 </div>
 
 <!-- SEARCH MODAL POPUP -->
@@ -264,8 +358,7 @@
             <span class="filter-chip" id="filterCompleted" onclick="setFilter('completed')">Completed</span>
         </div>
 
-        <input type="text" class="modal-search-input" id="modalSearchInput" placeholder="Type name, phone, or venue..." oninput="executeSearch()">
-
+        <input type="text" class="modal-search-input pl-input" id="modalSearchInput" placeholder="Type name, phone, or venue..." oninput="executeSearch()">
         <div class="search-results-list" id="modalSearchResults"></div>
     </div>
 </div>
@@ -273,14 +366,11 @@
 <div class="card" id="billInvoiceCard">
     <!-- Header with Logo -->
     <div class="header">
-        <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
             <img src="Vayu%20logo.PNG" alt="Logo" class="brand-logo">
             <div>
-                <h1 class="brand-title">Vayu Wedding Planners</h1>
-                <p class="brand-address">
-                    Visakhapatnam<br>
-                    <strong>Contact:</strong> +91 91774 47779
-                </p>
+                <h1 class="brand-title">Lalitha Event Decors</h1>
+                <p class="brand-address">Visakhapatnam<br><strong>Contact:</strong> +91 91774 47779</p>
             </div>
         </div>
         <div style="text-align: right;">
@@ -290,31 +380,37 @@
         </div>
     </div>
 
-    <!-- Client & Event Details -->
-    <div class="client-grid">
-        <div class="field">
-            <label>Customer Name *</label>
-            <input type="text" id="custName" placeholder="Client Name" oninput="autoCap(this); saveLiveDraft();">
+    <!-- Client & Event Details (Collapsible for Mobile) -->
+    <div>
+        <div class="client-section-header no-print" onclick="toggleClientSection()">
+            <span>👤 Customer & Venue Details</span>
+            <span id="clientToggleIcon">▲</span>
         </div>
-        <div class="field">
-            <label>Contact Number *</label>
-            <input type="tel" id="custMobile" placeholder="Mobile Number" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, ''); saveLiveDraft();">
-        </div>
-        <div class="field">
-            <label>Customer Address</label>
-            <input type="text" id="custAddress" placeholder="Address / Location" oninput="autoCap(this); saveLiveDraft();">
-        </div>
-        <div class="field">
-            <label>Main Event Name</label>
-            <input type="text" id="eventName" placeholder="e.g. Wedding" oninput="autoCap(this); saveLiveDraft();">
-        </div>
-        <div class="field">
-            <label>Main Venue *</label>
-            <input type="text" id="eventVenue" placeholder="Event Venue" oninput="autoCap(this); saveLiveDraft();">
-        </div>
-        <div class="field">
-            <label>Invoice Date</label>
-            <input type="date" id="invDate" onchange="saveLiveDraft()">
+        <div class="client-grid" id="clientDetailsContainer">
+            <div class="field">
+                <label>Name *</label>
+                <input type="text" id="custName" placeholder="Client Name" oninput="autoCap(this); saveLiveDraft();">
+            </div>
+            <div class="field">
+                <label>Mobile *</label>
+                <input type="tel" id="custMobile" placeholder="Mobile Number" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, ''); saveLiveDraft();">
+            </div>
+            <div class="field">
+                <label>Address</label>
+                <input type="text" id="custAddress" placeholder="Address / Location" oninput="autoCap(this); saveLiveDraft();">
+            </div>
+            <div class="field">
+                <label>Event Name</label>
+                <input type="text" id="eventName" placeholder="e.g. Wedding" oninput="autoCap(this); saveLiveDraft();">
+            </div>
+            <div class="field">
+                <label>Venue *</label>
+                <input type="text" id="eventVenue" placeholder="Event Venue" oninput="autoCap(this); saveLiveDraft();">
+            </div>
+            <div class="field">
+                <label>Date</label>
+                <input type="date" id="invDate" onchange="saveLiveDraft()">
+            </div>
         </div>
     </div>
 
@@ -322,11 +418,11 @@
     <div id="categoriesContainer"></div>
 
     <div class="btn-group no-print">
-        <button class="btn btn-add" onclick="addEventCategory()">➕ Add Event Category</button>
+        <button class="btn btn-add" onclick="addEventCategory()">➕ Add Category</button>
         <button class="btn btn-clear" onclick="clearAllCategories()">🗑️ Clear All</button>
     </div>
 
-    <!-- Advances & Summary -->
+    <!-- Advances -->
     <div class="action-bar">
         <div class="advances-container">
             <div class="advances-header">
@@ -334,32 +430,6 @@
                 <button class="btn-adv-add no-print" onclick="addAdvanceRow()">+</button>
             </div>
             <div id="advancesList"></div>
-        </div>
-
-        <div class="summary-box">
-            <div class="summary-row">
-                <span>Sub Total:</span>
-                <span>₹<span id="grandTotalDisplay">0</span></span>
-            </div>
-
-            <div class="summary-row no-print" id="discBtnRow">
-                <button class="btn-disc-toggle" onclick="showDiscountInput()">+ Add Discount</button>
-            </div>
-
-            <div class="summary-row" id="discInputRow" style="display: none;">
-                <span>Discount (₹):</span>
-                <span>- ₹<input type="number" id="discountInput" value="" inputmode="decimal" oninput="calculateTotals(); saveLiveDraft();" placeholder="0"></span>
-            </div>
-
-            <div class="summary-row">
-                <span>Advance:</span>
-                <span>- ₹<span id="totalAdvanceDisplay">0</span></span>
-            </div>
-
-            <div class="summary-row balance">
-                <span>Balance Due:</span>
-                <span>₹<span id="balanceDisplay">0</span></span>
-            </div>
         </div>
     </div>
 
@@ -370,38 +440,49 @@
     </div>
 
     <!-- Terms Toggle Button Container -->
-    <div class="no-print" id="addTermsBtnContainer" style="display: block; text-align: left;">
-        <button class="btn-terms-toggle btn-terms-add" onclick="toggleTerms()">➕ Add Terms & Conditions</button>
+    <div class="no-print" id="addTermsBtnContainer" style="display: none; text-align: left;">
+        <button class="btn-terms-toggle btn-terms-add" onclick="toggleTerms()">Add T&C</button>
     </div>
 
-    <!-- Terms & Conditions Section (Hidden by default) -->
-    <div class="bottom-notes terms-hidden" id="termsBoxContainer">
+    <!-- Terms & Conditions Section -->
+    <div class="bottom-notes" id="termsBoxContainer">
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <label>Terms & Conditions:</label>
-            <button class="btn-terms-toggle btn-terms-remove no-print" onclick="toggleTerms()">✕ Remove Terms</button>
+            <button class="btn-terms-toggle btn-terms-remove no-print" onclick="toggleTerms()">Remove T&C</button>
         </div>
-        <ol class="terms-list">
-            <li>Work starts only after advance payment.</li>
-            <li>Advances are non-refundable upon cancellation.</li>
-            <li>Extra work or hours will incur additional charges.</li>
-            <li>Full balance must be cleared on event day.</li>
-        </ol>
+        <ol class="terms-list" id="termsListContainer"></ol>
     </div>
 
-    <!-- MAIN ACTION BUTTONS -->
-    <div class="submit-container no-print">
-        <div style="display: flex; flex-direction: column; width: 100%; gap: 8px;" id="mainActionButtons">
-            <!-- Dynamic Buttons rendered based on state -->
+    <!-- POST SUBMIT ACTIONS CONTAINER -->
+    <div class="submit-container no-print" id="postSubmitContainer" style="display: none; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 8px; text-align: center;">
+        <p style="margin: 0 0 6px 0; font-weight: bold; color: #166534; font-size: 12px;" id="successMsg">🎉 Saved Successfully!</p>
+        <div style="display: flex; justify-content: center; gap: 6px; flex-wrap: wrap;">
+            <button class="btn btn-pdf" style="padding: 6px 10px; font-size: 11px;" onclick="sharePDF()">📲 PDF</button>
+            <button class="btn btn-whatsapp" style="padding: 6px 10px; font-size: 11px;" onclick="sendWhatsApp()">💬 WhatsApp</button>
+            <button class="btn btn-jpeg" style="padding: 6px 10px; font-size: 11px;" onclick="downloadJPEG()">🖼️ JPEG</button>
+            <button class="btn btn-print" style="padding: 6px 10px; font-size: 11px;" onclick="window.print()">🖨️ Print</button>
         </div>
+    </div>
+</div>
 
-        <div id="postSubmitActions" style="display: none; width: 100%; text-align: center;">
-            <p style="margin: 0 0 6px 0; font-weight: bold; color: #38a169; font-size: 13px;" id="successMsg">🎉 Saved! Select Option:</p>
-            <div style="display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;">
-                <button class="btn btn-pdf" onclick="sharePDF()">📲 Share PDF</button>
-                <button class="btn btn-jpeg" onclick="downloadJPEG()">🖼️ JPEG</button>
-                <button class="btn btn-print" onclick="window.print()">🖨️ Print</button>
-            </div>
-        </div>
+<!-- STICKY BOTTOM SUMMARY & ACTIONS BAR -->
+<div class="sticky-bottom-bar no-print">
+    <div class="sticky-summary-row">
+        <span>Sub Total: ₹<span id="grandTotalDisplay">0</span></span>
+        <span id="discToggleArea">
+            <button class="btn-disc-toggle" onclick="showDiscountInput()" style="background:#d97706; color:#fff; border:none; padding:3px 8px; border-radius:4px; font-weight:700; cursor:pointer;">+ Disc</button>
+        </span>
+        <span id="discDisplayArea" style="display: none;">
+            Disc: -₹<input type="number" id="discountInput" value="" inputmode="decimal" oninput="calculateTotals(); saveLiveDraft();" placeholder="0" style="width: 60px; padding: 2px; border: 1px solid #d97706; background: #112c21; color: #fff; font-weight: bold; text-align: right;">
+        </span>
+        <span>Adv: -₹<span id="totalAdvanceDisplay">0</span></span>
+    </div>
+    <div class="sticky-summary-row balance">
+        <span>Balance Due:</span>
+        <span>₹<span id="balanceDisplay">0</span></span>
+    </div>
+    <div class="sticky-actions" id="mainActionButtons">
+        <!-- Rendered dynamically -->
     </div>
 </div>
 
@@ -418,7 +499,6 @@
         }).catch(err => console.error("Sheet Sync Failed:", err));
     }
 
-    // Clear testing data and active draft on load
     localStorage.removeItem('vayu_active_draft');
     localStorage.removeItem('lalitha_events_db');
 
@@ -426,41 +506,35 @@
 
     const defaultFavorites = {
         tabEvents: [
-            { id: 'def_1', name: 'LED Food Counters', uom: 'Pcs', unitCost: 5000, qty: 1, notes: '', isCustom: false },
-            { id: 'def_2', name: 'LED Wall', uom: 'Sft', unitCost: 140, qty: 432, notes: '8x16 ft', isCustom: false },
-            { id: 'def_3', name: 'Dance Floor', uom: 'Ft', unitCost: 14000, qty: 1, notes: '16x16 ft', isCustom: false },
-            { id: 'def_4', name: 'Sound System', uom: 'Set', unitCost: 20000, qty: 1, notes: 'Linear Tops', isCustom: false },
-            { id: 'def_5', name: 'Photography', uom: 'Team', unitCost: 25000, qty: 1, notes: 'Photo & Video', isCustom: false }
+            { id: 'def_1', name: 'LED Food Counters', uom: '', unitCost: '', qty: '', notes: '' },
+            { id: 'def_2', name: 'LED Wall', uom: '', unitCost: '', qty: '', notes: '' },
+            { id: 'def_3', name: 'Dance Floor', uom: '', unitCost: '', qty: '', notes: '' },
+            { id: 'def_4', name: 'Sound System', uom: '', unitCost: '', qty: '', notes: '' },
+            { id: 'def_5', name: 'Photography', uom: '', unitCost: '', qty: '', notes: '' }
         ],
         tabSpecial: [
-            { id: 'def_6', name: 'Cold Fire', uom: 'Pair', unitCost: 5500, qty: 1, notes: 'Entrance', isCustom: false },
-            { id: 'def_7', name: 'Flower Blast', uom: 'Shot', unitCost: 3500, qty: 1, notes: 'Petals', isCustom: false },
-            { id: 'def_8', name: 'Paper Blast', uom: 'Shot', unitCost: 3000, qty: 1, notes: 'Confetti', isCustom: false },
-            { id: 'def_9', name: 'Fog Machine', uom: 'Pair', unitCost: 4000, qty: 1, notes: 'Low Fog', isCustom: false }
+            { id: 'def_6', name: 'Cold Fire', uom: '', unitCost: '', qty: '', notes: '' },
+            { id: 'def_7', name: 'Flower Blast', uom: '', unitCost: '', qty: '', notes: '' },
+            { id: 'def_8', name: 'Paper Blast', uom: '', unitCost: '', qty: '', notes: '' },
+            { id: 'def_9', name: 'Fog Machine', uom: '', unitCost: '', qty: '', notes: '' }
         ],
         tabCatering: [
-            { id: 'def_c1', name: 'Tiffins', uom: 'Plates', unitCost: 0, qty: 0, notes: 'Meal: Tiffins', isCustom: false },
-            { id: 'def_c2', name: 'Lunch', uom: 'Plates', unitCost: 0, qty: 0, notes: 'Meal: Lunch', isCustom: false },
-            { id: 'def_c3', name: 'Snacks', uom: 'Plates', unitCost: 0, qty: 0, notes: 'Meal: Snacks', isCustom: false },
-            { id: 'def_c4', name: 'Dinner', uom: 'Plates', unitCost: 0, qty: 0, notes: 'Meal: Dinner', isCustom: false }
+            { id: 'def_c1', name: 'Tiffins', uom: '', unitCost: '', qty: '', notes: '' },
+            { id: 'def_c2', name: 'Lunch', uom: '', unitCost: '', qty: '', notes: '' },
+            { id: 'def_c3', name: 'Snacks', uom: '', unitCost: '', qty: '', notes: '' },
+            { id: 'def_c4', name: 'Dinner', uom: '', unitCost: '', qty: '', notes: '' }
         ],
         tabDecor: [
-            { id: 'def_10', name: 'Entrance Arch', uom: 'Set', unitCost: 15000, qty: 1, notes: 'Fresh Flowers', isCustom: false },
-            { id: 'def_11', name: 'Stage Decor', uom: 'Set', unitCost: 25000, qty: 1, notes: 'Theme Setup', isCustom: false },
-            { id: 'def_12', name: 'Passage Lighting', uom: 'Set', unitCost: 10000, qty: 1, notes: 'Pathway', isCustom: false }
+            { id: 'def_10', name: 'Entrance Arch', uom: '', unitCost: '', qty: '', notes: '' },
+            { id: 'def_11', name: 'Stage Decor', uom: '', unitCost: '', qty: '', notes: '' },
+            { id: 'def_12', name: 'Passage Lighting', uom: '', unitCost: '', qty: '', notes: '' }
         ]
     };
 
     function getCustomFavorites() {
         const stored = localStorage.getItem('vayu_custom_favorites');
         if (stored) {
-            try {
-                let parsed = JSON.parse(stored);
-                if (!parsed.tabCatering || parsed.tabCatering.length === 0) {
-                    parsed.tabCatering = defaultFavorites.tabCatering;
-                }
-                return parsed;
-            } catch(e) { return defaultFavorites; }
+            try { return JSON.parse(stored); } catch(e) { return defaultFavorites; }
         }
         localStorage.setItem('vayu_custom_favorites', JSON.stringify(defaultFavorites));
         return defaultFavorites;
@@ -471,48 +545,97 @@
         renderCategories();
     }
 
-    function promptAddNewPreset(tabId) {
-        const name = prompt("Enter Item Name:");
-        if (!name || name.trim() === "") return;
-
-        let unitCost = 0;
-        let qty = 1;
-        let uom = "Pcs";
-        let notes = "";
-
-        if (tabId === 'tabCatering') {
-            uom = "Plates";
-            notes = "Meal: " + name;
-        } else {
-            const unitCostStr = prompt(`Enter Unit Price (₹) for "${name}":`, "0");
-            unitCost = parseFloat(unitCostStr) || 0;
-            uom = prompt(`Enter UOM (e.g. Set, Pcs, Ft):`, "Pcs") || "Pcs";
-            notes = prompt(`Enter Notes (Optional):`, "") || "";
-        }
-
-        const favs = getCustomFavorites();
-        if (!favs[tabId]) favs[tabId] = [];
-
-        favs[tabId].push({
-            id: 'cust_' + Date.now(),
-            name: name.trim(),
-            uom: uom.trim(),
-            unitCost: unitCost,
-            qty: qty,
-            notes: notes.trim(),
-            isCustom: true
+    let currentPriceListTab = 'tabEvents';
+    function openPriceListModal() {
+        document.getElementById('priceListModal').style.display = 'flex';
+        renderPriceListTable();
+    }
+    function closePriceListModal() {
+        document.getElementById('priceListModal').style.display = 'none';
+        renderCategories();
+    }
+    function switchPriceListTab(tabId) {
+        currentPriceListTab = tabId;
+        ['plTabEvents', 'plTabSpecial', 'plTabCatering', 'plTabDecor'].forEach(id => {
+            document.getElementById(id).classList.remove('active');
         });
-
-        saveCustomFavorites(favs);
+        document.getElementById(tabId.replace('tab', 'plTab')).classList.add('active');
+        renderPriceListTable();
     }
 
-    function deleteCustomPreset(tabId, itemId) {
-        if (confirm("Remove preset?")) {
-            const favs = getCustomFavorites();
-            if (favs[tabId]) {
-                favs[tabId] = favs[tabId].filter(i => i.id !== itemId);
-                saveCustomFavorites(favs);
-            }
+    function renderPriceListTable() {
+        const container = document.getElementById('priceListTableContainer');
+        const favs = getCustomFavorites();
+        const items = favs[currentPriceListTab] || [];
+
+        if (items.length === 0) {
+            container.innerHTML = `<div class="search-result-item" style="text-align:center; color:#777; justify-content:center;">No items in this category.</div>`;
+            return;
+        }
+
+        container.innerHTML = items.map((item, idx) => `
+            <div class="pl-item-card">
+                <div class="pl-row-1">
+                    <div class="pl-field-group" style="flex: 1;">
+                        <label>Item Name</label>
+                        <input type="text" class="pl-input" value="${item.name}" oninput="updatePriceListItem(${idx}, 'name', this.value)" placeholder="Item Name">
+                    </div>
+                    <button class="btn-del" style="margin-top: 14px;" onclick="deletePriceListItem(${idx})" title="Delete">✕</button>
+                </div>
+                <div class="pl-row-2">
+                    <div class="pl-field-group">
+                        <label>UOM</label>
+                        <input type="text" class="pl-input" value="${item.uom}" oninput="updatePriceListItem(${idx}, 'uom', this.value)" placeholder="Unit">
+                    </div>
+                    <div class="pl-field-group">
+                        <label>Price (₹)</label>
+                        <input type="number" inputmode="decimal" class="pl-input" value="${item.unitCost}" oninput="updatePriceListItem(${idx}, 'unitCost', parseFloat(this.value)||0)" placeholder="0">
+                    </div>
+                    <div class="pl-field-group">
+                        <label>Quantity</label>
+                        <input type="number" inputmode="numeric" class="pl-input" value="${item.qty}" oninput="updatePriceListItem(${idx}, 'qty', parseFloat(this.value)||0)" placeholder="0">
+                    </div>
+                </div>
+                <div class="pl-field-group">
+                    <label>Notes / Description</label>
+                    <input type="text" class="pl-input" value="${item.notes || ''}" oninput="updatePriceListItem(${idx}, 'notes', this.value)" placeholder="Details...">
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function updatePriceListItem(idx, key, val) {
+        const favs = getCustomFavorites();
+        if (favs[currentPriceListTab] && favs[currentPriceListTab][idx]) {
+            favs[currentPriceListTab][idx][key] = val;
+            saveCustomFavorites(favs);
+        }
+    }
+    function deletePriceListItem(idx) {
+        const favs = getCustomFavorites();
+        if (favs[currentPriceListTab]) {
+            favs[currentPriceListTab].splice(idx, 1);
+            saveCustomFavorites(favs);
+            renderPriceListTable();
+        }
+    }
+    function addNewPriceListItem() {
+        const favs = getCustomFavorites();
+        if (!favs[currentPriceListTab]) favs[currentPriceListTab] = [];
+        favs[currentPriceListTab].push({ id: 'cust_' + Date.now(), name: '', uom: '', unitCost: '', qty: '', notes: '' });
+        saveCustomFavorites(favs);
+        renderPriceListTable();
+    }
+
+    function toggleClientSection() {
+        const container = document.getElementById('clientDetailsContainer');
+        const icon = document.getElementById('clientToggleIcon');
+        if (container.style.display === 'none') {
+            container.style.display = 'grid';
+            icon.innerText = '▲';
+        } else {
+            container.style.display = 'none';
+            icon.innerText = '▼';
         }
     }
 
@@ -533,7 +656,6 @@
             const el = document.getElementById(`${prefix}-${catIdx}`);
             if (el) el.classList.remove('active');
         });
-
         ['tabEvents', 'tabSpecial', 'tabCatering', 'tabDecor'].forEach(panelPrefix => {
             const panel = document.getElementById(`${panelPrefix}-${catIdx}`);
             if (panel) {
@@ -541,10 +663,8 @@
                 panel.classList.remove('active');
             }
         });
-
         const activeBtn = document.getElementById(`${tabId.replace('tab', 'btnTab')}-${catIdx}`);
         if (activeBtn) activeBtn.classList.add('active');
-
         const activePanel = document.getElementById(`${tabId}-${catIdx}`);
         if (activePanel) {
             activePanel.style.display = 'flex';
@@ -565,23 +685,80 @@
         else box.classList.add('notes-row-hidden');
     }
 
-    let showTerms = false;
+    let showTerms = true;
+    let baseTermsList = [
+        "Work begins strictly after receipt of the initial advance payment.",
+        "Advance payments are non-refundable as materials and dates are blocked in advance.",
+        "Full balance payment must be settled on or before the event day."
+    ];
+
+    let termsList = [...baseTermsList];
+
+    function updateDynamicTerms() {
+        let allItems = [];
+        eventCategories.forEach(cat => {
+            (cat.items || []).forEach(item => {
+                if (item.name) allItems.push(item.name.toLowerCase());
+            });
+        });
+
+        let currentTerms = [...baseTermsList];
+
+        // Specific keyword checks
+        const hasLedOrLighting = allItems.some(name => name.includes('led') || name.includes('light') || name.includes('wall') || name.includes('sound') || name.includes('counter'));
+        const hasSpecialFx = allItems.some(name => name.includes('fire') || name.includes('blast') || name.includes('fog') || name.includes('cold') || name.includes('paper'));
+        const hasFloralOrStage = allItems.some(name => name.includes('flower') || name.includes('stage') || name.includes('arch') || name.includes('decor') || name.includes('passage'));
+        const hasCatering = allItems.some(name => name.includes('tiffin') || name.includes('lunch') || name.includes('dinner') || name.includes('snack') || name.includes('catering'));
+        const hasPhotography = allItems.some(name => name.includes('photo') || name.includes('video') || name.includes('candid') || name.includes('drone'));
+
+        if (hasLedOrLighting) {
+            currentTerms.push("Uninterrupted heavy power backup (generator) must be provided by the client/venue for LED walls, lighting, and sound systems.");
+        }
+        if (hasSpecialFx) {
+            currentTerms.push("Venue management clearance and safe ceiling clearance must be guaranteed by the client for special effects (Cold Fire / Blasts).");
+        }
+        if (hasFloralOrStage) {
+            currentTerms.push("Minor variations in fresh floral arrangements or custom stage color tones may occur based on daily seasonal market availability.");
+        }
+        if (hasCatering) {
+            currentTerms.push("Exact guest count for catering/food items must be confirmed 48 hours prior to the event date to avoid service discrepancies.");
+        }
+        if (hasPhotography) {
+            currentTerms.push("Raw media and edited outputs for photography/videography will be delivered within the agreed post-production timeline.");
+        }
+
+        currentTerms.push("The client or venue management will be held liable for any accidental damage, breakage, or equipment misuse during the event.");
+
+        termsList = [...new Set(currentTerms)];
+        renderTermsList();
+    }
+
     function toggleTerms() {
         showTerms = !showTerms;
         updateTermsUI();
         saveLiveDraft();
     }
-
     function updateTermsUI() {
         const termsBox = document.getElementById('termsBoxContainer');
         const addBtnBox = document.getElementById('addTermsBtnContainer');
         if (showTerms) {
             termsBox.classList.remove('terms-hidden');
             addBtnBox.style.display = 'none';
+            renderTermsList();
         } else {
             termsBox.classList.add('terms-hidden');
             addBtnBox.style.display = 'block';
         }
+    }
+    function renderTermsList() {
+        document.getElementById('termsListContainer').innerHTML = termsList.map((term, idx) => `
+            <li>${term} <button class="term-del-btn" onclick="removeTerm(${idx})">✕</button></li>
+        `).join('');
+    }
+    function removeTerm(idx) {
+        termsList.splice(idx, 1);
+        renderTermsList();
+        saveLiveDraft();
     }
 
     let currentEventId = null;
@@ -590,29 +767,20 @@
     const todayStr = new Date().toISOString().split('T')[0];
 
     let eventCategories = [
-        {
-            categoryName: "",
-            eventDate: todayStr,
-            eventTime: "",
-            eventVenue: "",
-            items: []
-        }
+        { categoryName: "", eventDate: todayStr, eventTime: "", eventVenue: "", items: [] }
     ];
-
     let advancePayments = [{ label: "1st Advance", amount: "", mode: "PhonePe / GPay", date: todayStr }];
 
     function generateNextBillId(targetStatus) {
         const events = getSavedEvents();
         let maxSeq = 0;
         const prefix = (targetStatus === 'estimation') ? 'EST' : 'CON';
-
         events.forEach(e => {
             if (e.billId && e.billId.startsWith(prefix)) {
                 let seq = parseInt(e.billId.replace(prefix, '')) || 0;
                 if (seq > maxSeq) maxSeq = seq;
             }
         });
-
         return prefix + (maxSeq + 1);
     }
 
@@ -643,7 +811,6 @@
             const letter = String.fromCharCode(65 + catIdx);
             const catDiv = document.createElement('div');
             catDiv.className = 'event-category-section';
-            catDiv.setAttribute('data-cat-index', catIdx);
 
             let catTotal = cat.items.reduce((sum, item) => sum + ((parseFloat(item.unitCost) || 0) * (parseFloat(item.qty) || 0)), 0);
 
@@ -651,50 +818,67 @@
             ['tabEvents', 'tabSpecial', 'tabCatering', 'tabDecor'].forEach(tabId => {
                 let chipsHTML = '';
                 (favs[tabId] || []).forEach(item => {
-                    const onClickAction = (tabId === 'tabCatering') 
-                        ? `addItemToCategory(${catIdx}, '${item.name}', 'Plates', '', '', 'Meal: ${item.name}')`
-                        : `addItemToCategory(${catIdx}, '${item.name}', '${item.uom}', ${item.unitCost}, ${item.qty}, '${item.notes || ''}')`;
-                    
-                    const delIcon = item.isCustom ? `<span class="chip-del-icon" onclick="event.stopPropagation(); deleteCustomPreset('${tabId}', '${item.id}')">✕</span>` : '';
-                    chipsHTML += `<div class="chip" onclick="${onClickAction}"><span>+ ${item.name}</span>${delIcon}</div>`;
+                    const priceText = item.unitCost !== '' && item.unitCost !== undefined && !isNaN(item.unitCost) ? ` (₹${item.unitCost})` : '';
+                    chipsHTML += `<div class="chip" onclick="addItemToCategory(${catIdx}, '${item.name}', '${item.uom || ''}', '${item.unitCost !== undefined ? item.unitCost : ''}', '${item.qty !== undefined ? item.qty : ''}', '${item.notes || ''}')"><span>+ ${item.name}${priceText}</span></div>`;
                 });
-                chipsHTML += `<button class="chip chip-add-btn" onclick="promptAddNewPreset('${tabId}')">➕ Add</button>`;
-                
                 const activeClass = (tabId === 'tabEvents') ? 'active' : '';
                 favPanelsHTML += `<div class="fav-content-panel ${activeClass}" id="${tabId}-${catIdx}" style="${tabId === 'tabEvents' ? 'display:flex;' : 'display:none;'}">${chipsHTML}</div>`;
             });
 
-            let rowsHTML = '';
+            let itemsHTML = '';
             if (cat.items.length > 0) {
                 cat.items.forEach((item, itemIdx) => {
                     const lineTotal = (parseFloat(item.unitCost) || 0) * (parseFloat(item.qty) || 0);
                     const serialNo = itemIdx + 1;
 
-                    rowsHTML += `
-                        <tr data-cat="${catIdx}" data-item="${itemIdx}">
-                            <td><input type="text" class="cell text-center" value="${serialNo}" readonly style="background:#f7fafc; font-weight:bold;"></td>
-                            <td><input type="text" class="cell" value="${item.name || ''}" oninput="updateItemData(${catIdx}, ${itemIdx}, 'name', this); autoCap(this)"></td>
-                            <td><input type="text" class="cell" value="${item.uom || ''}" oninput="updateItemData(${catIdx}, ${itemIdx}, 'uom', this); autoCap(this)"></td>
-                            <td><input type="number" inputmode="decimal" class="cell text-right" value="${item.unitCost !== undefined && item.unitCost !== '' ? item.unitCost : ''}" oninput="updateItemCalculation(${catIdx}, ${itemIdx}, 'unitCost', this.value)"></td>
-                            <td><input type="number" inputmode="numeric" class="cell text-right" value="${item.qty !== undefined && item.qty !== '' ? item.qty : ''}" oninput="updateItemCalculation(${catIdx}, ${itemIdx}, 'qty', this.value)"></td>
-                            <td class="text-right line-total-${catIdx}-${itemIdx}" style="font-weight: 700; padding-right: 4px; padding-top: 6px; font-size: 13px;">₹${lineTotal.toLocaleString('en-IN')}</td>
-                            <td><input type="text" class="cell" value="${item.notes || ''}" oninput="updateItemData(${catIdx}, ${itemIdx}, 'notes', this); autoCap(this)"></td>
-                            <td class="no-print text-center"><button class="btn-del" onclick="deleteItemRow(${catIdx}, ${itemIdx})">✕</button></td>
-                        </tr>
+                    itemsHTML += `
+                        <div class="mobile-item-card">
+                            <div class="mic-top-row">
+                                <div class="mic-sno">${serialNo}</div>
+                                <div class="mic-group mic-name">
+                                    <label>Item Name</label>
+                                    <input type="text" class="mic-input" value="${item.name || ''}" oninput="updateItemData(${catIdx}, ${itemIdx}, 'name', this); autoCap(this)" placeholder="Item description...">
+                                </div>
+                                <div class="mic-group mic-uom">
+                                    <label>UOM</label>
+                                    <input type="text" class="mic-input" value="${item.uom || ''}" oninput="updateItemData(${catIdx}, ${itemIdx}, 'uom', this); autoCap(this)" placeholder="Unit">
+                                </div>
+                            </div>
+                            <div class="mic-bottom-row">
+                                <div class="mic-group">
+                                    <label>Price (₹)</label>
+                                    <input type="number" inputmode="decimal" class="mic-input text-right" value="${item.unitCost !== undefined && item.unitCost !== '' ? item.unitCost : ''}" oninput="updateItemCalculation(${catIdx}, ${itemIdx}, 'unitCost', this.value)" placeholder="0">
+                                </div>
+                                <div class="mic-group">
+                                    <label>Quantity</label>
+                                    <input type="number" inputmode="numeric" class="mic-input text-right" value="${item.qty !== undefined && item.qty !== '' ? item.qty : ''}" oninput="updateItemCalculation(${catIdx}, ${itemIdx}, 'qty', this.value)" placeholder="0" style="font-weight: bold; background: #fffdf0;">
+                                </div>
+                                <div class="mic-group mic-notes-group">
+                                    <label>Notes</label>
+                                    <input type="text" class="mic-input" value="${item.notes || ''}" oninput="updateItemData(${catIdx}, ${itemIdx}, 'notes', this); autoCap(this)" placeholder="Specs...">
+                                </div>
+                                <div class="no-print" style="display:flex; gap:2px; align-items:flex-end; padding-top:14px;">
+                                    <button class="btn-row-clear" onclick="clearItemRow(${catIdx}, ${itemIdx})" title="Clear">Clr</button>
+                                    <button class="btn-del" onclick="deleteItemRow(${catIdx}, ${itemIdx})" title="Delete">✕</button>
+                                </div>
+                            </div>
+                            <div style="text-align: right; font-size: 11px; font-weight: 800; color: #1b4332; margin-top: 2px;">
+                                Total: ₹<span class="line-total-${catIdx}-${itemIdx}">${lineTotal.toLocaleString('en-IN')}</span>
+                            </div>
+                        </div>
                     `;
                 });
             } else {
-                rowsHTML = `<tr><td colspan="8" class="text-center" style="padding: 8px; color: #718096; font-size: 12px; font-weight: 600;">No items added yet. Click "+ Add Item" or use Quick Add above.</td></tr>`;
+                itemsHTML = `<div style="text-align:center; padding:10px; color:#475569; font-size:12px; font-weight:600;">No items added yet. Click "+ Add Item" or Quick Add above.</div>`;
             }
 
             catDiv.innerHTML = `
                 <div class="event-category-header">
                     <div style="display: flex; gap: 6px; align-items: center; width: 100%; flex-wrap: wrap;">
-                        <span style="font-size: 11px; font-weight: 800; color: #2d3748;">Cat ${letter}:</span>
-                        <input type="text" class="event-category-title-input" style="flex: 1; min-width: 120px;" value="${cat.categoryName}" oninput="updateCategoryMeta(${catIdx}, 'categoryName', this.value); autoCap(this)" placeholder="Category Name (e.g. Reception)">
-                        <input type="text" style="flex: 1; min-width: 120px; padding: 4px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 12px; font-weight: 600;" value="${cat.eventVenue || ''}" oninput="updateCategoryMeta(${catIdx}, 'eventVenue', this.value); autoCap(this)" placeholder="Venue">
-                        <input type="date" value="${cat.eventDate || todayStr}" style="padding: 4px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 12px; font-weight: 600;" onchange="updateCategoryMeta(${catIdx}, 'eventDate', this.value)">
-                        <input type="time" value="${cat.eventTime || ''}" style="padding: 4px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 12px; font-weight: 600;" onchange="updateCategoryMeta(${catIdx}, 'eventTime', this.value)">
+                        <span style="font-size: 11px; font-weight: 800; color: #1b4332;">Cat ${letter}:</span>
+                        <input type="text" class="event-category-title-input" style="flex: 1; min-width: 110px;" value="${cat.categoryName}" oninput="updateCategoryMeta(${catIdx}, 'categoryName', this.value); autoCap(this)" placeholder="Category Name (e.g. Reception)">
+                        <input type="text" style="flex: 1; min-width: 110px; padding: 5px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 11px; font-weight: 600;" value="${cat.eventVenue || ''}" oninput="updateCategoryMeta(${catIdx}, 'eventVenue', this.value); autoCap(this)" placeholder="Venue">
+                        <input type="date" value="${cat.eventDate || todayStr}" style="padding: 5px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 11px; font-weight: 600;" onchange="updateCategoryMeta(${catIdx}, 'eventDate', this.value)">
                     </div>
                     <div class="no-print" style="display: flex; gap: 4px; width: 100%; justify-content: flex-end;">
                         <button class="btn btn-add" style="padding: 4px 8px; font-size: 10px;" onclick="addNewRowToCategory(${catIdx})">+ Add Item</button>
@@ -718,48 +902,25 @@
                     </div>
                 </div>
 
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th style="width: 40px;">S.No</th>
-                                <th style="width: 160px;">Item</th>
-                                <th style="width: 55px;">UOM</th>
-                                <th style="width: 80px;" class="text-right">Price</th>
-                                <th style="width: 50px;" class="text-right">Qty</th>
-                                <th style="width: 90px;" class="text-right">Total</th>
-                                <th style="width: 180px;">Notes</th>
-                                <th class="no-print" style="width: 35px;"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${rowsHTML}
-                        </tbody>
-                    </table>
+                <div style="display:flex; flex-direction:column; gap:6px; margin-top:4px;">
+                    ${itemsHTML}
                 </div>
-                <div style="text-align: right; font-size: 11px; font-weight: 800; color: #2d3748; padding-top: 2px;">
+
+                <div style="text-align: right; font-size: 11px; font-weight: 800; color: #1b4332; padding-top: 2px;">
                     Cat ${letter} Total: ₹<span id="catTotal-${catIdx}">${catTotal.toLocaleString('en-IN')}</span>
                 </div>
             `;
-
             container.appendChild(catDiv);
         });
-
         calculateTotals();
+        updateDynamicTerms();
     }
 
     function addEventCategory() {
-        eventCategories.push({
-            categoryName: "",
-            eventDate: todayStr,
-            eventTime: "",
-            eventVenue: "",
-            items: []
-        });
+        eventCategories.push({ categoryName: "", eventDate: todayStr, eventTime: "", eventVenue: "", items: [] });
         renderCategories();
         saveLiveDraft();
     }
-
     function deleteCategory(catIdx) {
         if (confirm("Delete category?")) {
             eventCategories.splice(catIdx, 1);
@@ -767,105 +928,88 @@
             saveLiveDraft();
         }
     }
-
     function updateCategoryMeta(catIdx, key, val) {
         eventCategories[catIdx][key] = val;
         saveLiveDraft();
     }
-
     function addNewRowToCategory(catIdx) {
         eventCategories[catIdx].items.push({ name: "", uom: "", unitCost: "", qty: "", notes: "" });
         renderCategories();
         saveLiveDraft();
     }
-
     function addItemToCategory(catIdx, name, uom, unitCost, qty, notes) {
         eventCategories[catIdx].items.push({ name, uom, unitCost, qty, notes });
         renderCategories();
         saveLiveDraft();
     }
-
+    function clearItemRow(catIdx, itemIdx) {
+        eventCategories[catIdx].items[itemIdx] = { name: "", uom: "", unitCost: "", qty: "", notes: "" };
+        renderCategories();
+        saveLiveDraft();
+    }
     function deleteItemRow(catIdx, itemIdx) {
         eventCategories[catIdx].items.splice(itemIdx, 1);
         renderCategories();
         saveLiveDraft();
     }
-
     function clearAllCategories() {
         if (confirm("Clear all items?")) {
-            eventCategories = [{
-                categoryName: "",
-                eventDate: todayStr,
-                eventTime: "",
-                eventVenue: "",
-                items: []
-            }];
+            eventCategories = [{ categoryName: "", eventDate: todayStr, eventTime: "", eventVenue: "", items: [] }];
             renderCategories();
             saveLiveDraft();
         }
     }
-
     function updateItemData(catIdx, itemIdx, key, inputElem) {
         eventCategories[catIdx].items[itemIdx][key] = inputElem.value;
+        updateDynamicTerms();
         saveLiveDraft();
     }
-
     function updateItemCalculation(catIdx, itemIdx, key, val) {
         eventCategories[catIdx].items[itemIdx][key] = val;
-        
         const item = eventCategories[catIdx].items[itemIdx];
         const lineTotal = (parseFloat(item.unitCost) || 0) * (parseFloat(item.qty) || 0);
-        
         const lineTotalEl = document.querySelector(`.line-total-${catIdx}-${itemIdx}`);
-        if (lineTotalEl) {
-            lineTotalEl.innerText = '₹' + lineTotal.toLocaleString('en-IN');
-        }
+        if (lineTotalEl) lineTotalEl.innerText = lineTotal.toLocaleString('en-IN');
 
         const catTotal = eventCategories[catIdx].items.reduce((sum, i) => sum + ((parseFloat(i.unitCost) || 0) * (parseFloat(i.qty) || 0)), 0);
         const catTotalEl = document.getElementById(`catTotal-${catIdx}`);
-        if (catTotalEl) {
-            catTotalEl.innerText = catTotal.toLocaleString('en-IN');
-        }
+        if (catTotalEl) catTotalEl.innerText = catTotal.toLocaleString('en-IN');
 
         calculateTotals();
+        updateDynamicTerms();
         saveLiveDraft();
     }
 
     function renderAdvances() {
         const container = document.getElementById('advancesList');
         container.innerHTML = '';
-
         advancePayments.forEach((adv, idx) => {
             const div = document.createElement('div');
             div.className = 'advance-row';
             div.innerHTML = `
-                <input type="text" value="${adv.label}" readonly style="width: 28%; background: #f7fafc; font-weight:700;">
-                <input type="date" value="${adv.date}" style="width: 30%;" onchange="updateAdvanceField(${idx}, 'date', this.value)">
-                <select style="width: 25%;" onchange="updateAdvanceField(${idx}, 'mode', this.value)">
+                <input type="text" value="${adv.label}" readonly style="width: 25%; background: #f8fafc; font-weight:700;">
+                <input type="date" value="${adv.date}" style="width: 32%;" onchange="updateAdvanceField(${idx}, 'date', this.value)">
+                <select style="width: 26%;" onchange="updateAdvanceField(${idx}, 'mode', this.value)">
                     <option value="Cash" ${adv.mode === 'Cash' ? 'selected' : ''}>Cash</option>
                     <option value="PhonePe / GPay" ${adv.mode === 'PhonePe / GPay' ? 'selected' : ''}>UPI</option>
                     <option value="Bank Transfer" ${adv.mode === 'Bank Transfer' ? 'selected' : ''}>Bank</option>
                 </select>
                 <input type="number" inputmode="decimal" class="text-right" value="${adv.amount !== undefined && adv.amount !== '' ? adv.amount : ''}" placeholder="₹" style="width: 17%; font-weight: 700;" oninput="updateAdvanceAmount(${idx}, this.value)">
-                <button class="btn-del no-print" onclick="deleteAdvanceRow(${idx})">✕</button>
+                <button class="btn-del no-print" style="padding:4px 6px;" onclick="deleteAdvanceRow(${idx})">✕</button>
             `;
             container.appendChild(div);
         });
-
         calculateTotals();
     }
-
     function updateAdvanceAmount(idx, val) {
         advancePayments[idx].amount = val;
         calculateTotals();
         saveLiveDraft();
     }
-
     function updateAdvanceField(idx, field, val) {
         advancePayments[idx][field] = val;
         saveLiveDraft();
     }
-
     function addAdvanceRow() {
         const nextNum = advancePayments.length + 1;
         let suffix = nextNum === 1 ? "st" : nextNum === 2 ? "nd" : nextNum === 3 ? "rd" : "th";
@@ -873,7 +1017,6 @@
         renderAdvances();
         saveLiveDraft();
     }
-
     function deleteAdvanceRow(idx) {
         advancePayments.splice(idx, 1);
         renderAdvances();
@@ -881,8 +1024,8 @@
     }
 
     function showDiscountInput() {
-        document.getElementById('discBtnRow').style.display = 'none';
-        document.getElementById('discInputRow').style.display = 'flex';
+        document.getElementById('discToggleArea').style.display = 'none';
+        document.getElementById('discDisplayArea').style.display = 'inline-block';
         document.getElementById('discountInput').focus();
     }
 
@@ -895,19 +1038,16 @@
         const discountInput = document.getElementById('discountInput');
         const discount = parseFloat(discountInput.value) || 0;
         const totalAdvance = advancePayments.reduce((acc, adv) => acc + (parseFloat(adv.amount) || 0), 0);
-        
         const balance = grandTotal - discount - totalAdvance;
 
         document.getElementById('grandTotalDisplay').innerText = grandTotal.toLocaleString('en-IN');
         document.getElementById('totalAdvanceDisplay').innerText = totalAdvance.toLocaleString('en-IN');
         document.getElementById('balanceDisplay').innerText = balance.toLocaleString('en-IN');
 
-        const discRow = document.getElementById('discInputRow');
         if (discount > 0) {
-            document.getElementById('discBtnRow').style.display = 'none';
-            discRow.style.display = 'flex';
+            document.getElementById('discToggleArea').style.display = 'none';
+            document.getElementById('discDisplayArea').style.display = 'inline-block';
         }
-
         return { grandTotal, discount, totalAdvance, balance };
     }
 
@@ -933,34 +1073,30 @@
         if (currentEventId) {
             if (eventStatus === 'estimation') {
                 container.innerHTML = `
-                    <button class="btn btn-estimation" onclick="saveAsEstimation()">📝 Update Estimation</button>
-                    <button class="btn btn-submit" onclick="confirmAndSaveEvent('confirmed')">💾 Confirm Event</button>
-                    <button class="btn btn-complete" onclick="processEventComplete()">🏁 Mark Complete</button>
+                    <button class="btn btn-estimation" onclick="saveAsEstimation()">📝 Save Est.</button>
+                    <button class="btn btn-submit" onclick="confirmAndSaveEvent('confirmed')">💾 Confirm</button>
                 `;
             } else if (eventStatus === 'confirmed') {
                 container.innerHTML = `
-                    <button class="btn btn-update" onclick="confirmAndSaveEvent('confirmed')">💾 Update Confirmation</button>
-                    <button class="btn btn-complete" onclick="processEventComplete()">🏁 Mark Complete</button>
+                    <button class="btn btn-update" onclick="confirmAndSaveEvent('confirmed')">💾 Update</button>
+                    <button class="btn btn-complete" onclick="processEventComplete()">🏁 Complete</button>
                 `;
             } else {
                 container.innerHTML = `
-                    <button class="btn btn-update" onclick="confirmAndSaveEvent('completed')">💾 Update Completed Event</button>
+                    <button class="btn btn-update" onclick="confirmAndSaveEvent('completed')">💾 Update</button>
                 `;
             }
         } else {
             container.innerHTML = `
-                <button class="btn btn-estimation" onclick="saveAsEstimation()">📝 Save Estimation</button>
-                <button class="btn btn-submit" onclick="confirmAndSaveEvent('confirmed')">💾 Confirm Event</button>
-                <button class="btn btn-complete" onclick="processEventComplete()">🏁 Mark Complete</button>
+                <button class="btn btn-estimation" onclick="saveAsEstimation()">📝 Save Est.</button>
+                <button class="btn btn-submit" onclick="confirmAndSaveEvent('confirmed')">💾 Confirm</button>
             `;
         }
     }
 
     function saveLiveDraft() {
         const draftData = {
-            currentEventId,
-            currentBillId,
-            eventStatus,
+            currentEventId, currentBillId, eventStatus,
             custName: document.getElementById('custName').value,
             custAddress: document.getElementById('custAddress').value,
             custMobile: document.getElementById('custMobile').value,
@@ -969,9 +1105,7 @@
             invDate: document.getElementById('invDate').value,
             customNotes: document.getElementById('customNotesInput').value,
             discount: document.getElementById('discountInput').value,
-            showTerms,
-            eventCategories,
-            advancePayments
+            showTerms, termsList, eventCategories, advancePayments
         };
         localStorage.setItem('vayu_active_draft', JSON.stringify(draftData));
     }
@@ -982,7 +1116,6 @@
             currentEventId = null;
             currentBillId = null;
             eventStatus = 'estimation';
-
             document.getElementById('custName').value = '';
             document.getElementById('custAddress').value = '';
             document.getElementById('custMobile').value = '';
@@ -991,55 +1124,35 @@
             document.getElementById('invDate').valueAsDate = new Date();
             document.getElementById('customNotesInput').value = '';
             document.getElementById('discountInput').value = '';
-
-            showTerms = false;
+            showTerms = true;
             updateTermsUI();
-
-            eventCategories = [{
-                categoryName: "",
-                eventDate: todayStr,
-                eventTime: "",
-                eventVenue: "",
-                items: []
-            }];
+            eventCategories = [{ categoryName: "", eventDate: todayStr, eventTime: "", eventVenue: "", items: [] }];
             advancePayments = [{ label: "1st", amount: "", mode: "PhonePe / GPay", date: todayStr }];
-
             renderCategories();
             renderAdvances();
             checkNotesText();
             updateStatusUI('estimation');
-
-            document.getElementById('mainActionButtons').style.display = 'flex';
-            document.getElementById('postSubmitActions').style.display = 'none';
+            document.getElementById('postSubmitContainer').style.display = 'none';
         }
     }
 
     let activeFilter = 'all';
-
-    function getSavedEvents() {
-        return JSON.parse(localStorage.getItem('lalitha_events_db') || '[]');
-    }
-
+    function getSavedEvents() { return JSON.parse(localStorage.getItem('lalitha_events_db') || '[]'); }
+    
     function openSearchModal() {
         document.getElementById('searchModal').style.display = 'flex';
         document.getElementById('modalSearchInput').value = '';
         executeSearch();
         document.getElementById('modalSearchInput').focus();
     }
-
-    function closeSearchModal() {
-        document.getElementById('searchModal').style.display = 'none';
-    }
-
+    function closeSearchModal() { document.getElementById('searchModal').style.display = 'none'; }
+    
     function setFilter(filterType) {
         activeFilter = filterType;
         ['filterAll', 'filterEstimation', 'filterConfirmed', 'filterCompleted'].forEach(id => {
             document.getElementById(id).className = 'filter-chip';
         });
-        if (filterType === 'all') document.getElementById('filterAll').className = 'filter-chip active';
-        if (filterType === 'estimation') document.getElementById('filterEstimation').className = 'filter-chip active';
-        if (filterType === 'confirmed') document.getElementById('filterConfirmed').className = 'filter-chip active';
-        if (filterType === 'completed') document.getElementById('filterCompleted').className = 'filter-chip active';
+        document.getElementById(filterType === 'all' ? 'filterAll' : filterType === 'estimation' ? 'filterEstimation' : filterType === 'confirmed' ? 'filterConfirmed' : 'filterCompleted').className = 'filter-chip active';
         executeSearch();
     }
 
@@ -1048,16 +1161,13 @@
         const resultsContainer = document.getElementById('modalSearchResults');
         let events = getSavedEvents();
 
-        if (activeFilter === 'estimation') events = events.filter(e => e.eventStatus === 'estimation');
-        else if (activeFilter === 'confirmed') events = events.filter(e => e.eventStatus === 'confirmed');
-        else if (activeFilter === 'completed') events = events.filter(e => e.eventStatus === 'completed');
+        if (activeFilter !== 'all') events = events.filter(e => e.eventStatus === activeFilter);
 
         if (query.length > 0) {
             events = events.filter(evt => 
                 (evt.custMobile && evt.custMobile.includes(query)) ||
                 (evt.eventVenue && evt.eventVenue.toLowerCase().includes(query)) ||
                 (evt.custName && evt.custName.toLowerCase().includes(query)) ||
-                (evt.eventName && evt.eventName.toLowerCase().includes(query)) ||
                 (evt.billId && evt.billId.toLowerCase().includes(query))
             );
         }
@@ -1065,88 +1175,61 @@
         events.sort((a, b) => new Date(b.invDate || '9999-12-31') - new Date(a.invDate || '9999-12-31'));
 
         if (events.length === 0) {
-            resultsContainer.innerHTML = `<div class="search-result-item" style="text-align:center; color:#777;">No records found.</div>`;
+            resultsContainer.innerHTML = `<div class="search-result-item" style="text-align:center; color:#777; justify-content:center;">No records found.</div>`;
             return;
         }
 
-        resultsContainer.innerHTML = events.map(evt => `
-            <div class="search-result-item" onclick="loadEvent('${evt.id}')">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <strong>[${evt.billId || 'N/A'}] ${evt.custName || 'Client'}</strong>
-                    <span class="status-stamp ${evt.eventStatus === 'completed' ? 'stamp-complete' : evt.eventStatus === 'confirmed' ? 'stamp-pending' : 'stamp-estimation'}">
-                        ${(evt.eventStatus || 'estimation').toUpperCase()}
-                    </span>
+        let headerHtml = (query.length === 0 && activeFilter === 'all') ? `<div style="font-size:10px; font-weight:800; color:#475569; text-transform:uppercase; margin-bottom:2px;">Recent Quotations</div>` : '';
+
+        resultsContainer.innerHTML = headerHtml + events.map(evt => {
+            const cleanPhone = (evt.custMobile || '').replace(/[^0-9]/g, '');
+            const waPhone = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone;
+            const waMsg = `Hello *${evt.custName || 'Client'}*, here is your summary for *${evt.eventName || 'Event'}* at *${evt.eventVenue || 'Venue'}*. Total: ₹${(evt.grandTotal || 0).toLocaleString('en-IN')}`;
+            const waUrl = `https://api.whatsapp.com/send?phone=${waPhone}&text=${encodeURIComponent(waMsg)}`;
+
+            return `
+                <div class="search-result-item">
+                    <div style="flex: 1; cursor: pointer;" onclick="loadEvent('${evt.id}')">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <strong>[${evt.billId || 'N/A'}] ${evt.custName || 'Client'}</strong>
+                            <span class="status-stamp ${evt.eventStatus === 'completed' ? 'stamp-complete' : evt.eventStatus === 'confirmed' ? 'stamp-pending' : 'stamp-estimation'}">${(evt.eventStatus || 'estimation').toUpperCase()}</span>
+                        </div>
+                        <div style="margin-top:2px; font-size:11px; color:#475569;">📞 ${evt.custMobile || 'N/A'} | 📍 ${evt.eventVenue || 'N/A'}</div>
+                    </div>
+                    <div style="display: flex; gap: 4px; align-items: center;" class="no-print">
+                        <a href="${waUrl}" target="_blank" onclick="event.stopPropagation()" style="background:#15803d; color:#fff; padding:6px 8px; border-radius:6px; font-size:11px; text-decoration:none; font-weight:bold;" title="WhatsApp">💬</a>
+                    </div>
                 </div>
-                <div style="margin-top:4px; font-size:11px; color:#555;">
-                    📞 ${evt.custMobile || 'N/A'} | 🎉 ${evt.eventName || 'Event'}<br>
-                    📅 Date: <strong>${evt.invDate || 'N/A'}</strong> | 📍 ${evt.eventVenue || 'N/A'}
-                </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
     }
 
-    // Required fields & category validation check
     function validateForm() {
         const custName = document.getElementById('custName').value.trim();
         const custMobile = document.getElementById('custMobile').value.trim();
         const eventVenue = document.getElementById('eventVenue').value.trim();
-
-        if (!custName) {
-            alert("Please enter Customer Name.");
-            document.getElementById('custName').focus();
-            return false;
-        }
-        if (!custMobile) {
-            alert("Please enter Contact Number.");
-            document.getElementById('custMobile').focus();
-            return false;
-        }
-        if (!eventVenue) {
-            alert("Please enter Main Venue.");
-            document.getElementById('eventVenue').focus();
-            return false;
-        }
-
-        let totalItemsCount = 0;
-        eventCategories.forEach(cat => {
-            totalItemsCount += (cat.items || []).length;
-        });
-
-        if (totalItemsCount === 0) {
-            alert("Please add at least 1 category with items before saving.");
-            return false;
-        }
-
+        if (!custName) { alert("Please enter Customer Name."); document.getElementById('custName').focus(); return false; }
+        if (!custMobile) { alert("Please enter Contact Number."); document.getElementById('custMobile').focus(); return false; }
+        if (!eventVenue) { alert("Please enter Main Venue."); document.getElementById('eventVenue').focus(); return false; }
+        let totalItems = eventCategories.reduce((acc, cat) => acc + (cat.items || []).length, 0);
+        if (totalItems === 0) { alert("Please add at least 1 item before saving."); return false; }
         return true;
     }
 
     function saveEventToStorage(status) {
         if (!validateForm()) return false;
-
         let events = getSavedEvents();
-        if (!currentEventId) {
-            currentEventId = 'EVT_' + Date.now();
-        }
-
+        if (!currentEventId) currentEventId = 'EVT_' + Date.now();
         let existingEvent = events.find(e => e.id === currentEventId);
-
         if (!currentBillId) {
-            if (existingEvent && existingEvent.billId) {
-                currentBillId = existingEvent.billId;
-            } else {
-                currentBillId = generateNextBillId(status);
-            }
+            currentBillId = (existingEvent && existingEvent.billId) ? existingEvent.billId : generateNextBillId(status);
         } else if (status === 'confirmed' && currentBillId.startsWith('EST')) {
             currentBillId = generateNextBillId('confirmed');
         }
-
         updateStatusUI(status);
         const totals = calculateTotals();
-
         const eventData = {
-            id: currentEventId,
-            billId: currentBillId,
-            eventStatus: status,
+            id: currentEventId, billId: currentBillId, eventStatus: status,
             custName: document.getElementById('custName').value,
             custAddress: document.getElementById('custAddress').value,
             custMobile: document.getElementById('custMobile').value,
@@ -1155,18 +1238,12 @@
             invDate: document.getElementById('invDate').value,
             customNotes: document.getElementById('customNotesInput').value,
             discount: document.getElementById('discountInput').value,
-            showTerms,
-            eventCategories,
-            advancePayments,
-            grandTotal: totals.grandTotal,
-            totalAdvance: totals.totalAdvance,
-            balance: totals.balance
+            showTerms, termsList, eventCategories, advancePayments,
+            grandTotal: totals.grandTotal, totalAdvance: totals.totalAdvance, balance: totals.balance
         };
-
         const existingIndex = events.findIndex(e => e.id === currentEventId);
         if (existingIndex >= 0) events[existingIndex] = eventData;
         else events.push(eventData);
-
         localStorage.setItem('lalitha_events_db', JSON.stringify(events));
         saveLiveDraft();
         syncToGoogleSheets(eventData);
@@ -1177,11 +1254,9 @@
         const events = getSavedEvents();
         const evt = events.find(e => e.id === eventId);
         if (!evt) return;
-
         currentEventId = evt.id;
         currentBillId = evt.billId || null;
-        eventStatus = (evt.eventStatus === 'confirmed' || evt.eventStatus === 'completed') ? evt.eventStatus : 'estimation';
-
+        eventStatus = evt.eventStatus || 'estimation';
         document.getElementById('custName').value = evt.custName || '';
         document.getElementById('custAddress').value = evt.custAddress || '';
         document.getElementById('custMobile').value = evt.custMobile || '';
@@ -1190,68 +1265,48 @@
         document.getElementById('invDate').value = evt.invDate || '';
         document.getElementById('customNotesInput').value = evt.customNotes || '';
         document.getElementById('discountInput').value = evt.discount || '';
-
-        showTerms = evt.showTerms !== undefined ? evt.showTerms : false;
+        showTerms = evt.showTerms !== undefined ? evt.showTerms : true;
+        if (evt.termsList) termsList = evt.termsList;
         updateTermsUI();
-
         eventCategories = evt.eventCategories || [];
         advancePayments = evt.advancePayments || [];
-
         renderCategories();
         renderAdvances();
         checkNotesText();
         updateStatusUI(eventStatus);
-
-        document.getElementById('mainActionButtons').style.display = 'flex';
-        document.getElementById('postSubmitActions').style.display = 'none';
-
+        document.getElementById('postSubmitContainer').style.display = 'none';
         closeSearchModal();
         saveLiveDraft();
     }
 
-    // Secondary Confirmation for Submitting / Updating Estimation
     function saveAsEstimation() {
-        const msg = currentEventId ? "Are you sure you want to update this estimation?" : "Are you sure you want to save this as a new estimation?";
-        if (confirm(msg)) {
+        if (confirm("Save/Update as Estimation?")) {
             if (saveEventToStorage('estimation')) {
-                document.getElementById('mainActionButtons').style.display = 'flex';
-                document.getElementById('postSubmitActions').style.display = 'block';
-                document.getElementById('successMsg').innerText = "📝 Estimation Saved / Updated & Synced!";
+                document.getElementById('postSubmitContainer').style.display = 'block';
+                document.getElementById('successMsg').innerText = "📝 Estimation Saved & Synced!";
             }
         }
     }
-
-    // Secondary Confirmation for Confirming / Updating Event
     function confirmAndSaveEvent(status) {
-        const actionLabel = status === 'confirmed' ? "Confirm and Save this Event?" : "Update Completed Event?";
-        if (confirm(actionLabel)) {
-            if (confirm("Final Check: Do you want to push these changes to the records and sync sheet?")) {
-                if (saveEventToStorage(status)) {
-                    document.getElementById('mainActionButtons').style.display = 'flex';
-                    document.getElementById('postSubmitActions').style.display = 'block';
-                    document.getElementById('successMsg').innerText = status === 'confirmed' ? "🎉 Event Confirmed & Synced!" : "🏁 Event Updated & Synced!";
-                }
+        if (confirm("Confirm and Save Event?")) {
+            if (saveEventToStorage(status)) {
+                document.getElementById('postSubmitContainer').style.display = 'block';
+                document.getElementById('successMsg').innerText = "🎉 Event Confirmed & Synced!";
             }
         }
     }
-
     function processEventComplete() {
         const totals = calculateTotals();
-        if (!confirm("Mark complete?")) return;
-
-        const finalInput = prompt(`Balance Due: ₹${totals.balance}\n\nEnter Final Payment (₹):`, totals.balance);
+        const finalInput = prompt(`Balance Due: ₹${totals.balance}\nEnter Final Payment (₹):`, totals.balance);
         if (finalInput === null) return;
-
         const finalPaid = parseFloat(finalInput) || 0;
         if (finalPaid > 0) {
             advancePayments.push({ label: "Final", amount: finalPaid, mode: "Cash", date: todayStr });
             renderAdvances();
         }
-
-        if (confirm("Are you ready to mark this event completely finished?")) {
+        if (confirm("Mark event completely finished?")) {
             if (saveEventToStorage('completed')) {
-                document.getElementById('mainActionButtons').style.display = 'flex';
-                document.getElementById('postSubmitActions').style.display = 'block';
+                document.getElementById('postSubmitContainer').style.display = 'block';
                 document.getElementById('successMsg').innerText = "🏁 Event Completed & Synced!";
             }
         }
@@ -1260,42 +1315,57 @@
     function captureA4Canvas(callback) {
         const card = document.getElementById('billInvoiceCard');
         card.classList.add('quotation-mode');
-
         const noPrintElems = card.querySelectorAll('.no-print');
         noPrintElems.forEach(el => el.style.display = 'none');
-
         html2canvas(card, { scale: 2, useCORS: true, width: 800, height: 1123 }).then(canvas => {
             card.classList.remove('quotation-mode');
             noPrintElems.forEach(el => el.style.display = '');
             callback(canvas);
         });
     }
-
     function sharePDF() {
         captureA4Canvas(canvas => {
             const imgData = canvas.toDataURL('image/jpeg', 0.95);
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF('p', 'mm', 'a4');
             pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
-            
             const pdfBlob = pdf.output('blob');
-            const file = new File([pdfBlob], 'Vayu_Quotation.pdf', { type: 'application/pdf' });
-
+            const file = new File([pdfBlob], 'Lalitha_Event_Decors_Quotation.pdf', { type: 'application/pdf' });
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                navigator.share({ files: [file], title: 'Vayu Quotation', text: 'Event Quotation' }).catch(() => pdf.save('Vayu_Quotation.pdf'));
+                navigator.share({ files: [file], title: 'Quotation', text: 'Event Quotation' }).catch(() => pdf.save('Lalitha_Event_Decors_Quotation.pdf'));
             } else {
-                pdf.save('Vayu_Quotation.pdf');
+                pdf.save('Lalitha_Event_Decors_Quotation.pdf');
             }
         });
     }
-
     function downloadJPEG() {
         captureA4Canvas(canvas => {
             const link = document.createElement('a');
-            link.download = 'Vayu_Quotation.jpg';
+            link.download = 'Lalitha_Event_Decors_Quotation.jpg';
             link.href = canvas.toDataURL('image/jpeg', 0.95);
             link.click();
         });
+    }
+    function sendWhatsApp() {
+        const custName = document.getElementById('custName').value || 'Client';
+        const custMobile = document.getElementById('custMobile').value.trim();
+        const totals = calculateTotals();
+        let message = `Hello *${custName}*, here is your quotation summary from *Lalitha Event Decors*:\n\n` +
+                      `🏷️ *Bill No:* ${currentBillId || 'Draft'}\n` +
+                      `🎉 *Event:* ${document.getElementById('eventName').value || 'Event'}\n` +
+                      `📍 *Venue:* ${document.getElementById('eventVenue').value || 'N/A'}\n` +
+                      `💰 *Grand Total:* ₹${totals.grandTotal.toLocaleString('en-IN')}\n` +
+                      `📉 *Discount:* ₹${totals.discount.toLocaleString('en-IN')}\n` +
+                      `💸 *Advance Paid:* ₹${totals.totalAdvance.toLocaleString('en-IN')}\n` +
+                      `📌 *Balance Due:* ₹${totals.balance.toLocaleString('en-IN')}\n\n` +
+                      `Thank you for choosing us!`;
+        let url = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+        if (custMobile) {
+            let cleanPhone = custMobile.replace(/[^0-9]/g, '');
+            if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
+            url = `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(message)}`;
+        }
+        window.open(url, '_blank');
     }
 
     renderCategories();
