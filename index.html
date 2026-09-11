@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lalitha Event Decors - Quotation / Invoice</title>
+    <title>VAYU WEDDING PLANNERS - Quotation / Invoice</title>
     <!-- External Libraries for Exporting JPG & PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -14,51 +14,55 @@
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #f2f4f8;
             margin: 0;
-            padding: 8px;
+            padding: 6px;
             color: #1c1e21;
         }
 
-        /* Responsive Container for Mobile Screen with Fixed Aspect Ratio */
+        /* Responsive Compact Container */
         .card {
             width: 100%;
             max-width: 820px;
             min-height: 1123px;
             margin: auto;
             background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-            padding: 16px;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            padding: 12px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
-        /* Search Bar Header */
+        /* Search Bar Header with Inline Icon */
         .search-container {
             width: 100%;
             max-width: 820px;
-            margin: 0 auto 12px auto;
-            background: #ffffff;
-            border-radius: 10px;
-            padding: 8px 12px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-            display: flex;
-            gap: 10px;
-            align-items: center;
+            margin: 0 auto 8px auto;
             position: relative;
-            border: 1px solid #e1e4e8;
+        }
+        .search-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            font-size: 14px;
+            color: #6c757d;
+            pointer-events: none;
         }
         .search-container input {
-            flex: 1;
-            padding: 10px 14px;
+            width: 100%;
+            padding: 8px 10px 8px 32px;
             border: 1px solid #ced4da;
-            border-radius: 8px;
-            font-size: 15px;
+            border-radius: 6px;
+            font-size: 13px;
             outline: none;
-            background: #f8f9fa;
+            background: #ffffff;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
         }
         .search-container input:focus {
-            background: #ffffff;
             border-color: #2980b9;
         }
         .search-results-dropdown {
@@ -68,18 +72,18 @@
             right: 0;
             background: #ffffff;
             border: 1px solid #d1d5db;
-            border-radius: 10px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-            max-height: 320px;
+            border-radius: 8px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            max-height: 300px;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             z-index: 1000;
             display: none;
         }
         .search-header-bar {
-            padding: 10px 14px;
+            padding: 6px 10px;
             font-weight: bold;
-            font-size: 11px;
+            font-size: 10px;
             background: #f1f3f5;
             color: #495057;
             display: flex;
@@ -90,60 +94,64 @@
             background: #e74c3c;
             color: #ffffff;
             border: none;
-            border-radius: 12px;
-            padding: 4px 10px;
-            font-size: 11px;
+            border-radius: 10px;
+            padding: 2px 8px;
+            font-size: 10px;
             font-weight: bold;
             cursor: pointer;
         }
         .search-result-item {
-            padding: 12px 14px;
+            padding: 8px 10px;
             cursor: pointer;
             border-bottom: 1px solid #eee;
-            font-size: 13px;
+            font-size: 12px;
         }
         .search-result-item:hover, .search-result-item:active { background: #f0f4f8; }
 
         .header {
             border-bottom: 2px solid #1a252f;
-            padding-bottom: 8px;
-            margin-bottom: 12px;
+            padding-bottom: 4px;
+            margin-bottom: 8px;
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 4px;
         }
         .brand-title {
             margin: 0;
-            font-size: 20px;
+            font-size: 16px;
             color: #1a252f;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             font-weight: 800;
         }
+
+        /* Hidden on Screen, Visible in Print/PDF */
         .brand-address {
-            margin: 3px 0 0 0;
-            font-size: 11px;
+            display: none;
+            margin: 2px 0 0 0;
+            font-size: 10px;
             color: #444;
-            line-height: 1.35;
+            line-height: 1.3;
         }
+
         .quotation-badge-container {
             text-align: right;
         }
         .quotation-badge {
-            font-size: 15px;
+            font-size: 12px;
             font-weight: bold;
             color: #1a252f;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
         .status-stamp {
-            margin-top: 4px;
+            margin-top: 2px;
             display: inline-block;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 9px;
             font-weight: bold;
             text-transform: uppercase;
         }
@@ -153,11 +161,11 @@
         .client-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 12px;
+            gap: 6px;
+            margin-bottom: 8px;
             background: #f8f9fa;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 6px 8px;
+            border-radius: 6px;
             border: 1px solid #e9ecef;
         }
         @media (max-width: 600px) {
@@ -166,54 +174,58 @@
         .grid-column {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
         }
         .field {
             display: flex;
             flex-direction: column;
         }
         .field label {
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 700;
             color: #555;
             text-transform: uppercase;
-            margin-bottom: 2px;
+            margin-bottom: 1px;
         }
         .field input {
-            padding: 8px 10px;
+            padding: 5px 7px;
             border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 14px;
-            line-height: 1.4;
+            border-radius: 4px;
+            font-size: 12px;
+            line-height: 1.2;
         }
 
-        /* Preset Quick-Add Bar */
+        /* Collapsible Quick Preset Accordion */
         .presets-bar {
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             background: #fff8e7;
             border: 1px solid #f0e2b6;
-            padding: 8px 10px;
-            border-radius: 8px;
+            padding: 5px 8px;
+            border-radius: 6px;
         }
-        .presets-title {
-            font-size: 11px;
+        .presets-title-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
             font-weight: bold;
             color: #8a6d3b;
-            margin-bottom: 6px;
             text-transform: uppercase;
+            cursor: pointer;
         }
         .preset-buttons {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 4px;
+            margin-top: 4px;
         }
         .chip {
             background-color: #ffffff;
             border: 1px solid #d4af37;
             color: #1a252f;
-            padding: 6px 12px;
-            border-radius: 18px;
-            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 10px;
             font-weight: 600;
             cursor: pointer;
         }
@@ -222,24 +234,24 @@
         .table-container { 
             overflow-x: auto; 
             -webkit-overflow-scrolling: touch; 
-            margin-bottom: 12px; 
+            margin-bottom: 8px; 
         }
         table {
             width: 100%;
-            min-width: 700px;
+            min-width: 680px;
             border-collapse: collapse;
             table-layout: fixed;
         }
         th {
             background-color: #1a252f;
             color: #ffffff;
-            padding: 8px 6px;
-            font-size: 11px;
+            padding: 5px 4px;
+            font-size: 10px;
             text-align: left;
             text-transform: uppercase;
         }
         td {
-            padding: 6px 4px;
+            padding: 3px;
             border-bottom: 1px solid #e9ecef;
             vertical-align: top;
             word-wrap: break-word;
@@ -248,59 +260,59 @@
         input.cell {
             width: 100%;
             border: 1px solid #ddd;
-            padding: 8px 6px;
-            font-size: 14px;
-            border-radius: 4px;
-            line-height: 1.4;
+            padding: 5px 4px;
+            font-size: 12px;
+            border-radius: 3px;
+            line-height: 1.2;
         }
         .text-right { text-align: right; }
         .text-center { text-align: center; }
 
         /* Buttons & Actions */
-        .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
+        .btn-group { display: flex; gap: 6px; flex-wrap: wrap; }
         .btn {
-            padding: 10px 16px;
+            padding: 6px 12px;
             border: none;
-            border-radius: 6px;
+            border-radius: 5px;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 11px;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 4px;
             touch-action: manipulation;
         }
         .btn-add { background-color: #27ae60; color: #fff; }
         .btn-clear { background-color: #e74c3c; color: #fff; }
-        .btn-submit { background-color: #2980b9; color: #fff; font-size: 15px; padding: 12px 18px; width: 100%; }
-        .btn-complete { background-color: #27ae60; color: #fff; font-size: 15px; padding: 12px 18px; width: 100%; }
+        .btn-submit { background-color: #2980b9; color: #fff; font-size: 13px; padding: 8px 14px; width: 100%; }
+        .btn-complete { background-color: #27ae60; color: #fff; font-size: 13px; padding: 8px 14px; width: 100%; }
         .btn-print { background-color: #1a252f; color: #fff; }
         .btn-pdf { background-color: #27ae60; color: #fff; }
         .btn-jpeg { background-color: #d35400; color: #fff; }
         .btn-terms-toggle {
-            font-size: 11px;
-            padding: 6px 12px;
-            border-radius: 4px;
+            font-size: 9px;
+            padding: 4px 8px;
+            border-radius: 3px;
             border: none;
             cursor: pointer;
             font-weight: 700;
         }
-        .btn-terms-add { background-color: #27ae60; color: #ffffff; margin-top: 10px; }
+        .btn-terms-add { background-color: #27ae60; color: #ffffff; margin-top: 6px; }
         .btn-terms-remove { background-color: #8e44ad; color: #ffffff; }
-        .btn-del { background-color: #ff4d4d; color: #fff; padding: 6px 10px; border-radius: 4px; border: none; cursor: pointer; }
+        .btn-del { background-color: #ff4d4d; color: #fff; padding: 3px 6px; border-radius: 3px; border: none; cursor: pointer; }
 
         /* Submit Section Container */
         .submit-container {
-            margin-top: 15px;
-            padding: 12px;
+            margin-top: 8px;
+            padding: 8px;
             background: #f8f9fa;
             border: 1px solid #e9ecef;
-            border-radius: 8px;
+            border-radius: 6px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
 
         /* Payment Section */
@@ -308,15 +320,15 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            gap: 12px;
-            margin-top: 12px;
+            gap: 8px;
+            margin-top: 8px;
             flex-wrap: wrap;
         }
         .advances-container {
             flex: 1.6;
             width: 100%;
             background: #f8f9fa;
-            padding: 10px;
+            padding: 6px 8px;
             border-radius: 6px;
             border: 1px solid #e9ecef;
         }
@@ -324,10 +336,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: bold;
             color: #1a252f;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
             text-transform: uppercase;
         }
         .btn-adv-add {
@@ -335,78 +347,78 @@
             color: white;
             border: none;
             border-radius: 50%;
-            width: 26px;
-            height: 26px;
-            font-size: 16px;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
             font-weight: bold;
             cursor: pointer;
         }
         .advance-row {
             display: flex;
-            gap: 6px;
-            margin-bottom: 6px;
+            gap: 4px;
+            margin-bottom: 4px;
             align-items: center;
         }
         .advance-row input, .advance-row select {
-            padding: 6px;
+            padding: 4px;
             border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 13px;
-            line-height: 1.4;
+            border-radius: 3px;
+            font-size: 11px;
+            line-height: 1.2;
         }
 
         .summary-box {
             background: #1a252f;
             color: #fff;
-            padding: 12px;
+            padding: 8px;
             border-radius: 6px;
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 4px;
         }
         .summary-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 13px;
+            font-size: 11px;
         }
         .summary-row input {
-            width: 100px;
-            padding: 4px 6px;
+            width: 80px;
+            padding: 2px 4px;
             border: 1px solid #555;
-            border-radius: 4px;
+            border-radius: 3px;
             background: #2c3e50;
             color: #fff;
             font-weight: bold;
             text-align: right;
-            font-size: 14px;
+            font-size: 12px;
         }
         .btn-disc-toggle {
             background: #f39c12;
             color: #fff;
             border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 11px;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-size: 9px;
             font-weight: bold;
             cursor: pointer;
         }
         .summary-row.balance {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             color: #2ecc71;
             border-top: 1px solid #34495e;
-            padding-top: 6px;
+            padding-top: 3px;
         }
 
         /* Notes & Terms Box */
         .custom-notes-box, .bottom-notes {
-            margin-top: 12px;
+            margin-top: 8px;
             background: #f8f9fa;
             border: 1px solid #e9ecef;
             border-radius: 6px;
-            padding: 8px 10px;
+            padding: 6px;
         }
         .terms-header-row {
             display: flex;
@@ -414,7 +426,7 @@
             align-items: center;
         }
         .custom-notes-box label, .bottom-notes label {
-            font-size: 11px;
+            font-size: 9px;
             font-weight: bold;
             color: #1a252f;
             text-transform: uppercase;
@@ -422,22 +434,22 @@
         }
         .custom-notes-box textarea {
             width: 100%;
-            height: 50px;
+            height: 40px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            padding: 8px;
-            font-size: 13px;
+            padding: 5px;
+            font-size: 11px;
             resize: none;
-            line-height: 1.4;
+            line-height: 1.2;
         }
         .terms-list {
-            margin: 6px 0 0 0;
-            padding-left: 18px;
-            font-size: 11px;
+            margin: 3px 0 0 0;
+            padding-left: 14px;
+            font-size: 9px;
             color: #333;
-            line-height: 1.5;
+            line-height: 1.35;
         }
-        .terms-list li { margin-bottom: 3px; }
+        .terms-list li { margin-bottom: 2px; }
 
         /* Hiding Terms Content */
         .terms-hidden { display: none !important; }
@@ -453,6 +465,7 @@
             appearance: none !important;
             -webkit-appearance: none !important;
         }
+        .quotation-mode .brand-address { display: block !important; }
 
         /* STRICT A4 PORTRAIT PRINT OPTIMIZATION */
         @media print {
@@ -476,6 +489,9 @@
             }
             .discount-row-hidden, .notes-row-hidden, .terms-hidden {
                 display: none !important;
+            }
+            .brand-address {
+                display: block !important;
             }
             .card {
                 width: 210mm !important;
@@ -523,10 +539,12 @@
 </head>
 <body>
 
-<!-- BEAUTIFUL SEARCH SECTION FOR UPCOMING & SAVED EVENTS -->
+<!-- COMPACT SEARCH BAR WITH INLINE ICON -->
 <div class="search-container no-print">
-    <span style="font-size: 16px;">🔍</span>
-    <input type="text" id="searchInput" placeholder="Tap to view upcoming events or search..." onfocus="showUpcomingDropdown()" oninput="handleSearch()">
+    <div class="search-input-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Search or pick upcoming event..." onfocus="showUpcomingDropdown()" oninput="handleSearch()">
+    </div>
     <div class="search-results-dropdown" id="searchResults"></div>
 </div>
 
@@ -535,7 +553,7 @@
         <!-- Header -->
         <div class="header">
             <div>
-                <h1 class="brand-title">Lalitha Event Decors</h1>
+                <h1 class="brand-title">VAYU WEDDING PLANNERS</h1>
                 <p class="brand-address">
                     D.No 9-6-18/1, Opp High School Gate, Highschool Road, Gajuwaka, Visakhapatnam - 530026<br>
                     <strong>Contact:</strong> +91 91774 47779
@@ -559,7 +577,7 @@
                     <input type="text" id="custAddress" placeholder="e.g. Gajuwaka, Vizag" oninput="autoCap(this)">
                 </div>
                 <div class="field">
-                    <label>Contact Mobile Number</label>
+                    <label>Contact Number</label>
                     <input type="tel" id="custMobile" placeholder="e.g. 9876543210" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                 </div>
             </div>
@@ -575,7 +593,7 @@
                 </div>
                 <div class="field">
                     <label>Event Date & Time</label>
-                    <div style="display: flex; gap: 6px;">
+                    <div style="display: flex; gap: 4px;">
                         <input type="date" id="eventDate" style="flex: 1;">
                         <input type="time" id="eventTime" style="flex: 1;">
                     </div>
@@ -587,10 +605,13 @@
             </div>
         </div>
 
-        <!-- Quick Preset Tap Bar -->
+        <!-- Collapsible Preset Bar -->
         <div class="presets-bar no-print">
-            <div class="presets-title">⚡ Quick Add Favorite Items:</div>
-            <div class="preset-buttons">
+            <div class="presets-title-bar" onclick="togglePresets()">
+                <span>⚡ Quick Favorite Items</span>
+                <span id="presetToggleIcon">▼</span>
+            </div>
+            <div class="preset-buttons" id="presetButtonsContainer" style="display: none;">
                 <button class="chip" onclick="addPreset('LED Counters', 'Pcs', 5000, 1, '')">+ LED Counters</button>
                 <button class="chip" onclick="addPreset('LED Wall', 'Sft', 140, 432, '8x16 ft')">+ LED Wall</button>
                 <button class="chip" onclick="addPreset('Fog Machine', 'Pair', 4000, 1, '')">+ Fog</button>
@@ -626,17 +647,17 @@
             </table>
         </div>
 
-        <div class="btn-group no-print" style="margin-bottom: 12px;">
-            <button class="btn btn-add" onclick="addNewRow()">+ Add Item</button>
-            <button class="btn btn-clear" onclick="clearAllRows()">Clear All</button>
+        <div class="btn-group no-print" style="margin-bottom: 8px;">
+            <button class="btn btn-add" onclick="addNewRow()">➕ Add Item</button>
+            <button class="btn btn-clear" onclick="clearAllRows()">🗑️ Clear</button>
         </div>
 
         <!-- Advances & Summary Section -->
         <div class="action-bar">
             <div class="advances-container">
                 <div class="advances-header">
-                    <span>Advance Payments History</span>
-                    <button class="btn-adv-add no-print" onclick="addAdvanceRow()" title="Add Another Advance">+</button>
+                    <span>Advance Payments</span>
+                    <button class="btn-adv-add no-print" onclick="addAdvanceRow()" title="Add Advance">+</button>
                 </div>
                 <div id="advancesList">
                     <!-- Advances injected dynamically -->
@@ -672,14 +693,14 @@
 
         <!-- Notes -->
         <div class="custom-notes-box notes-row-hidden" id="notesBoxContainer">
-            <label>Notes / Special Instructions:</label>
+            <label>Notes / Instructions:</label>
             <textarea id="customNotesInput" placeholder="Enter special instructions or notes..." oninput="autoCap(this); checkNotesText()"></textarea>
         </div>
     </div>
 
     <!-- Standalone Button to Add Terms when hidden -->
     <div class="no-print" id="addTermsBtnContainer" style="display: none; text-align: left;">
-        <button class="btn-terms-toggle btn-terms-add" onclick="toggleTerms()">+ Add Terms & Conditions</button>
+        <button class="btn-terms-toggle btn-terms-add" onclick="toggleTerms()">➕ Add Terms & Conditions</button>
     </div>
 
     <!-- Terms & Conditions Section -->
@@ -699,17 +720,17 @@
 
     <!-- SUBMIT & EVENT COMPLETE ACTIONS CONTAINER -->
     <div class="submit-container no-print">
-        <div style="display: flex; flex-direction: column; width: 100%; gap: 10px;" id="mainActionButtons">
-            <button class="btn btn-submit" onclick="confirmAndSaveEvent(false)">💾 Submit / Save Bill</button>
+        <div style="display: flex; flex-direction: column; width: 100%; gap: 6px;" id="mainActionButtons">
+            <button class="btn btn-submit" onclick="confirmAndSaveEvent(false)">💾 Save Bill</button>
             <button class="btn btn-complete" onclick="processEventComplete()">🏁 Mark Event Complete</button>
         </div>
 
         <!-- Post-Submit Options -->
         <div id="postSubmitActions" style="display: none; width: 100%; text-align: center;">
-            <p style="margin: 0 0 10px 0; font-weight: bold; color: #27ae60; font-size: 14px;">🎉 Action Completed Successfully! Select an Export Option:</p>
-            <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+            <p style="margin: 0 0 6px 0; font-weight: bold; color: #27ae60; font-size: 12px;">🎉 Bill Saved! Select Export Option:</p>
+            <div style="display: flex; justify-content: center; gap: 6px; flex-wrap: wrap;">
                 <button class="btn btn-pdf" onclick="sharePDF()">📲 Share PDF</button>
-                <button class="btn btn-jpeg" onclick="downloadJPEG()">🖼️ Download JPEG</button>
+                <button class="btn btn-jpeg" onclick="downloadJPEG()">🖼️ JPEG</button>
                 <button class="btn btn-print" onclick="window.print()">🖨️ Print</button>
             </div>
         </div>
@@ -718,6 +739,18 @@
 
 <script>
     document.getElementById('invDate').valueAsDate = new Date();
+
+    function togglePresets() {
+        const container = document.getElementById('presetButtonsContainer');
+        const icon = document.getElementById('presetToggleIcon');
+        if (container.style.display === 'none') {
+            container.style.display = 'flex';
+            icon.innerText = '▲';
+        } else {
+            container.style.display = 'none';
+            icon.innerText = '▼';
+        }
+    }
 
     // DUMMY SEED DATA FOR 5 UPCOMING EVENTS
     function seedDummyEvents() {
@@ -911,7 +944,7 @@
                 <td><input type="text" class="cell" value="${item.uom || ''}" oninput="updateData(${idx}, 'uom', this); autoCap(this)"></td>
                 <td><input type="number" inputmode="decimal" class="cell text-right" value="${item.unitCost || ''}" oninput="updateCalculation(${idx}, 'unitCost', this.value)"></td>
                 <td><input type="number" inputmode="numeric" class="cell text-right" value="${item.qty || ''}" oninput="updateCalculation(${idx}, 'qty', this.value)"></td>
-                <td class="text-right line-total" style="font-weight: bold; padding-right: 6px; padding-top: 10px;">₹${lineTotal.toLocaleString('en-IN')}</td>
+                <td class="text-right line-total" style="font-weight: bold; padding-right: 6px; padding-top: 6px;">₹${lineTotal.toLocaleString('en-IN')}</td>
                 <td><input type="text" class="cell" value="${item.notes || ''}" oninput="updateData(${idx}, 'notes', this); autoCap(this)"></td>
                 <td class="no-print text-center"><button class="btn-del" onclick="deleteRow(${idx})">✕</button></td>
             `;
@@ -1286,16 +1319,16 @@
             pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
             
             const pdfBlob = pdf.output('blob');
-            const file = new File([pdfBlob], 'Lalitha_Event_Decors_Quotation.pdf', { type: 'application/pdf' });
+            const file = new File([pdfBlob], 'VAYU_WEDDING_PLANNERS_Quotation.pdf', { type: 'application/pdf' });
 
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
                 navigator.share({
                     files: [file],
-                    title: 'Lalitha Event Decors Quotation',
-                    text: 'Here is your event quotation from Lalitha Event Decors.'
-                }).catch(() => pdf.save('Lalitha_Event_Decors_Quotation.pdf'));
+                    title: 'VAYU WEDDING PLANNERS Quotation',
+                    text: 'Here is your event quotation from VAYU WEDDING PLANNERS.'
+                }).catch(() => pdf.save('VAYU_WEDDING_PLANNERS_Quotation.pdf'));
             } else {
-                pdf.save('Lalitha_Event_Decors_Quotation.pdf');
+                pdf.save('VAYU_WEDDING_PLANNERS_Quotation.pdf');
             }
         });
     }
@@ -1304,7 +1337,7 @@
     function downloadJPEG() {
         captureA4Canvas(canvas => {
             const link = document.createElement('a');
-            link.download = 'Lalitha_Event_Decors_Quotation.jpg';
+            link.download = 'VAYU_WEDDING_PLANNERS_Quotation.jpg';
             link.href = canvas.toDataURL('image/jpeg', 0.95);
             link.click();
         });
