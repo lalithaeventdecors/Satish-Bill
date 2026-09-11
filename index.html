@@ -293,11 +293,11 @@
     <!-- Client & Event Details -->
     <div class="client-grid">
         <div class="field">
-            <label>Customer Name</label>
+            <label>Customer Name *</label>
             <input type="text" id="custName" placeholder="Client Name" oninput="autoCap(this); saveLiveDraft();">
         </div>
         <div class="field">
-            <label>Contact Number</label>
+            <label>Contact Number *</label>
             <input type="tel" id="custMobile" placeholder="Mobile Number" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, ''); saveLiveDraft();">
         </div>
         <div class="field">
@@ -309,7 +309,7 @@
             <input type="text" id="eventName" placeholder="e.g. Wedding" oninput="autoCap(this); saveLiveDraft();">
         </div>
         <div class="field">
-            <label>Main Venue</label>
+            <label>Main Venue *</label>
             <input type="text" id="eventVenue" placeholder="Event Venue" oninput="autoCap(this); saveLiveDraft();">
         </div>
         <div class="field">
@@ -1082,7 +1082,44 @@
         `).join('');
     }
 
+    // Validation Check before saving/updating
+    function validateForm() {
+        const custName = document.getElementById('custName').value.trim();
+        const custMobile = document.getElementById('custMobile').value.trim();
+        const eventVenue = document.getElementById('eventVenue').value.trim();
+
+        if (!custName) {
+            alert("Please enter Customer Name.");
+            document.getElementById('custName').focus();
+            return false;
+        }
+        if (!custMobile) {
+            alert("Please enter Contact Number.");
+            document.getElementById('custMobile').focus();
+            return false;
+        }
+        if (!eventVenue) {
+            alert("Please enter Main Venue.");
+            document.getElementById('eventVenue').focus();
+            return false;
+        }
+
+        let totalItemsCount = 0;
+        eventCategories.forEach(cat => {
+            totalItemsCount += (cat.items || []).length;
+        });
+
+        if (totalItemsCount === 0) {
+            alert("Please add at least 1 category with items before saving.");
+            return false;
+        }
+
+        return true;
+    }
+
     function saveEventToStorage(status) {
+        if (!validateForm()) return false;
+
         let events = getSavedEvents();
         if (!currentEventId) {
             currentEventId = 'EVT_' + Date.now();
@@ -1130,6 +1167,7 @@
         localStorage.setItem('lalitha_events_db', JSON.stringify(events));
         saveLiveDraft();
         syncToGoogleSheets(eventData);
+        return true;
     }
 
     function loadEvent(eventId) {
@@ -1169,18 +1207,20 @@
     }
 
     function saveAsEstimation() {
-        saveEventToStorage('estimation');
-        document.getElementById('mainActionButtons').style.display = 'flex';
-        document.getElementById('postSubmitActions').style.display = 'block';
-        document.getElementById('successMsg').innerText = "📝 Estimation Saved / Updated & Synced!";
+        if (saveEventToStorage('estimation')) {
+            document.getElementById('mainActionButtons').style.display = 'flex';
+            document.getElementById('postSubmitActions').style.display = 'block';
+            document.getElementById('successMsg').innerText = "📝 Estimation Saved / Updated & Synced!";
+        }
     }
 
     function confirmAndSaveEvent(status) {
         if (confirm(status === 'confirmed' ? "Confirm and Save this Event?" : "Update Completed Event?")) {
-            saveEventToStorage(status);
-            document.getElementById('mainActionButtons').style.display = 'flex';
-            document.getElementById('postSubmitActions').style.display = 'block';
-            document.getElementById('successMsg').innerText = status === 'confirmed' ? "🎉 Event Confirmed & Synced!" : "🏁 Event Updated & Synced!";
+            if (saveEventToStorage(status)) {
+                document.getElementById('mainActionButtons').style.display = 'flex';
+                document.getElementById('postSubmitActions').style.display = 'block';
+                document.getElementById('successMsg').innerText = status === 'confirmed' ? "🎉 Event Confirmed & Synced!" : "🏁 Event Updated & Synced!";
+            }
         }
     }
 
@@ -1197,10 +1237,11 @@
             renderAdvances();
         }
 
-        saveEventToStorage('completed');
-        document.getElementById('mainActionButtons').style.display = 'flex';
-        document.getElementById('postSubmitActions').style.display = 'block';
-        document.getElementById('successMsg').innerText = "🏁 Event Completed & Synced!";
+        if (saveEventToStorage('completed')) {
+            document.getElementById('mainActionButtons').style.display = 'flex';
+            document.getElementById('postSubmitActions').style.display = 'block';
+            document.getElementById('successMsg').innerText = "🏁 Event Completed & Synced!";
+        }
     }
 
     function captureA4Canvas(callback) {
