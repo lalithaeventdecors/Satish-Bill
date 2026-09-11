@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lalitha Event Decors - Quotation</title>
+    <title>Vayu Wedding Planners - Quotation</title>
     <!-- External Libraries for Exporting JPG & PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -369,7 +369,7 @@
         <div style="display: flex; align-items: center; gap: 8px;">
             <img src="Vayu%20logo.PNG" alt="Logo" class="brand-logo">
             <div>
-                <h1 class="brand-title">Lalitha Event Decors</h1>
+                <h1 class="brand-title">Vayu Wedding Planners</h1>
                 <p class="brand-address">Visakhapatnam<br><strong>Contact:</strong> +91 91774 47779</p>
             </div>
         </div>
@@ -500,7 +500,7 @@
     }
 
     localStorage.removeItem('vayu_active_draft');
-    localStorage.removeItem('lalitha_events_db');
+    localStorage.removeItem('vayu_events_db');
 
     document.getElementById('invDate').valueAsDate = new Date();
 
@@ -704,7 +704,6 @@
 
         let currentTerms = [...baseTermsList];
 
-        // Specific keyword checks
         const hasLedOrLighting = allItems.some(name => name.includes('led') || name.includes('light') || name.includes('wall') || name.includes('sound') || name.includes('counter'));
         const hasSpecialFx = allItems.some(name => name.includes('fire') || name.includes('blast') || name.includes('fog') || name.includes('cold') || name.includes('paper'));
         const hasFloralOrStage = allItems.some(name => name.includes('flower') || name.includes('stage') || name.includes('arch') || name.includes('decor') || name.includes('passage'));
@@ -1137,7 +1136,7 @@
     }
 
     let activeFilter = 'all';
-    function getSavedEvents() { return JSON.parse(localStorage.getItem('lalitha_events_db') || '[]'); }
+    function getSavedEvents() { return JSON.parse(localStorage.getItem('vayu_events_db') || '[]'); }
     
     function openSearchModal() {
         document.getElementById('searchModal').style.display = 'flex';
@@ -1244,7 +1243,7 @@
         const existingIndex = events.findIndex(e => e.id === currentEventId);
         if (existingIndex >= 0) events[existingIndex] = eventData;
         else events.push(eventData);
-        localStorage.setItem('lalitha_events_db', JSON.stringify(events));
+        localStorage.setItem('vayu_events_db', JSON.stringify(events));
         saveLiveDraft();
         syncToGoogleSheets(eventData);
         return true;
@@ -1330,18 +1329,18 @@
             const pdf = new jsPDF('p', 'mm', 'a4');
             pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
             const pdfBlob = pdf.output('blob');
-            const file = new File([pdfBlob], 'Lalitha_Event_Decors_Quotation.pdf', { type: 'application/pdf' });
+            const file = new File([pdfBlob], 'Vayu_Wedding_Planners_Quotation.pdf', { type: 'application/pdf' });
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                navigator.share({ files: [file], title: 'Quotation', text: 'Event Quotation' }).catch(() => pdf.save('Lalitha_Event_Decors_Quotation.pdf'));
+                navigator.share({ files: [file], title: 'Quotation', text: 'Event Quotation' }).catch(() => pdf.save('Vayu_Wedding_Planners_Quotation.pdf'));
             } else {
-                pdf.save('Lalitha_Event_Decors_Quotation.pdf');
+                pdf.save('Vayu_Wedding_Planners_Quotation.pdf');
             }
         });
     }
     function downloadJPEG() {
         captureA4Canvas(canvas => {
             const link = document.createElement('a');
-            link.download = 'Lalitha_Event_Decors_Quotation.jpg';
+            link.download = 'Vayu_Wedding_Planners_Quotation.jpg';
             link.href = canvas.toDataURL('image/jpeg', 0.95);
             link.click();
         });
@@ -1350,7 +1349,7 @@
         const custName = document.getElementById('custName').value || 'Client';
         const custMobile = document.getElementById('custMobile').value.trim();
         const totals = calculateTotals();
-        let message = `Hello *${custName}*, here is your quotation summary from *Lalitha Event Decors*:\n\n` +
+        let message = `Hello *${custName}*, here is your quotation summary from *Vayu Wedding Planners*:\n\n` +
                       `🏷️ *Bill No:* ${currentBillId || 'Draft'}\n` +
                       `🎉 *Event:* ${document.getElementById('eventName').value || 'Event'}\n` +
                       `📍 *Venue:* ${document.getElementById('eventVenue').value || 'N/A'}\n` +
