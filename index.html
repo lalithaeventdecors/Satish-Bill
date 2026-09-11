@@ -392,7 +392,6 @@
 </div>
 
 <script>
-    // Force clear old cached session data
     localStorage.removeItem('vayu_active_draft');
 
     document.getElementById('invDate').valueAsDate = new Date();
@@ -561,16 +560,14 @@
     let eventStatus = 'estimation';
     const todayStr = new Date().toISOString().split('T')[0];
 
-    // Completely empty initial state
+    // Starts completely empty with 0 items
     let eventCategories = [
         {
             categoryName: "",
             eventDate: todayStr,
             eventTime: "",
             eventVenue: "",
-            items: [
-                { name: "", uom: "", unitCost: "", qty: "", notes: "" }
-            ]
+            items: []
         }
     ];
 
@@ -607,23 +604,27 @@
             });
 
             let rowsHTML = '';
-            cat.items.forEach((item, itemIdx) => {
-                const lineTotal = (parseFloat(item.unitCost) || 0) * (parseFloat(item.qty) || 0);
-                const serialNo = itemIdx + 1;
+            if (cat.items.length > 0) {
+                cat.items.forEach((item, itemIdx) => {
+                    const lineTotal = (parseFloat(item.unitCost) || 0) * (parseFloat(item.qty) || 0);
+                    const serialNo = itemIdx + 1;
 
-                rowsHTML += `
-                    <tr data-cat="${catIdx}" data-item="${itemIdx}">
-                        <td><input type="text" class="cell text-center" value="${serialNo}" readonly style="background:#f7fafc; font-weight:bold;"></td>
-                        <td><input type="text" class="cell" value="${item.name || ''}" oninput="updateItemData(${catIdx}, ${itemIdx}, 'name', this); autoCap(this)"></td>
-                        <td><input type="text" class="cell" value="${item.uom || ''}" oninput="updateItemData(${catIdx}, ${itemIdx}, 'uom', this); autoCap(this)"></td>
-                        <td><input type="number" inputmode="decimal" class="cell text-right" value="${item.unitCost !== undefined && item.unitCost !== '' ? item.unitCost : ''}" oninput="updateItemCalculation(${catIdx}, ${itemIdx}, 'unitCost', this.value)"></td>
-                        <td><input type="number" inputmode="numeric" class="cell text-right" value="${item.qty !== undefined && item.qty !== '' ? item.qty : ''}" oninput="updateItemCalculation(${catIdx}, ${itemIdx}, 'qty', this.value)"></td>
-                        <td class="text-right line-total-${catIdx}-${itemIdx}" style="font-weight: 700; padding-right: 6px; padding-top: 8px; font-size: 14px;">₹${lineTotal.toLocaleString('en-IN')}</td>
-                        <td><input type="text" class="cell" value="${item.notes || ''}" oninput="updateItemData(${catIdx}, ${itemIdx}, 'notes', this); autoCap(this)"></td>
-                        <td class="no-print text-center"><button class="btn-del" onclick="deleteItemRow(${catIdx}, ${itemIdx})">✕</button></td>
-                    </tr>
-                `;
-            });
+                    rowsHTML += `
+                        <tr data-cat="${catIdx}" data-item="${itemIdx}">
+                            <td><input type="text" class="cell text-center" value="${serialNo}" readonly style="background:#f7fafc; font-weight:bold;"></td>
+                            <td><input type="text" class="cell" value="${item.name || ''}" oninput="updateItemData(${catIdx}, ${itemIdx}, 'name', this); autoCap(this)"></td>
+                            <td><input type="text" class="cell" value="${item.uom || ''}" oninput="updateItemData(${catIdx}, ${itemIdx}, 'uom', this); autoCap(this)"></td>
+                            <td><input type="number" inputmode="decimal" class="cell text-right" value="${item.unitCost !== undefined && item.unitCost !== '' ? item.unitCost : ''}" oninput="updateItemCalculation(${catIdx}, ${itemIdx}, 'unitCost', this.value)"></td>
+                            <td><input type="number" inputmode="numeric" class="cell text-right" value="${item.qty !== undefined && item.qty !== '' ? item.qty : ''}" oninput="updateItemCalculation(${catIdx}, ${itemIdx}, 'qty', this.value)"></td>
+                            <td class="text-right line-total-${catIdx}-${itemIdx}" style="font-weight: 700; padding-right: 6px; padding-top: 8px; font-size: 14px;">₹${lineTotal.toLocaleString('en-IN')}</td>
+                            <td><input type="text" class="cell" value="${item.notes || ''}" oninput="updateItemData(${catIdx}, ${itemIdx}, 'notes', this); autoCap(this)"></td>
+                            <td class="no-print text-center"><button class="btn-del" onclick="deleteItemRow(${catIdx}, ${itemIdx})">✕</button></td>
+                        </tr>
+                    `;
+                });
+            } else {
+                rowsHTML = `<tr><td colspan="8" class="text-center" style="padding: 12px; color: #718096; font-size: 13px; font-weight: 600;">No items added yet. Click "+ Add Item" or use Quick Add above.</td></tr>`;
+            }
 
             catDiv.innerHTML = `
                 <div class="event-category-header">
@@ -692,7 +693,7 @@
             eventDate: todayStr,
             eventTime: "",
             eventVenue: "",
-            items: [{ name: "", uom: "", unitCost: "", qty: "", notes: "" }]
+            items: []
         });
         renderCategories();
         saveLiveDraft();
@@ -725,9 +726,6 @@
 
     function deleteItemRow(catIdx, itemIdx) {
         eventCategories[catIdx].items.splice(itemIdx, 1);
-        if (eventCategories[catIdx].items.length === 0) {
-            eventCategories[catIdx].items.push({ name: "", uom: "", unitCost: "", qty: "", notes: "" });
-        }
         renderCategories();
         saveLiveDraft();
     }
@@ -739,7 +737,7 @@
                 eventDate: todayStr,
                 eventTime: "",
                 eventVenue: "",
-                items: [{ name: "", uom: "", unitCost: "", qty: "", notes: "" }]
+                items: []
             }];
             renderCategories();
             saveLiveDraft();
@@ -909,7 +907,7 @@
                 eventDate: todayStr,
                 eventTime: "",
                 eventVenue: "",
-                items: [{ name: "", uom: "", unitCost: "", qty: "", notes: "" }]
+                items: []
             }];
             advancePayments = [{ label: "1st", amount: "", mode: "PhonePe / GPay", date: todayStr }];
 
@@ -1136,7 +1134,6 @@
         });
     }
 
-    // Initial load rendering with completely empty fields
     renderCategories();
     renderAdvances();
     checkNotesText();
