@@ -105,7 +105,7 @@
             gap: 6px;
         }
         .pl-row-1 { display: flex; gap: 6px; align-items: center; }
-        .pl-row-2 { display: grid; grid-template-columns: 1fr 1.3fr 1fr; gap: 6px; align-items: center; }
+        .pl-row-2 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; align-items: center; }
         
         .pl-field-group { display: flex; flex-direction: column; gap: 2px; }
         .pl-field-group label { font-size: 9px; font-weight: 800; color: #475569; text-transform: uppercase; }
@@ -220,10 +220,10 @@
         .mic-name { flex: 1; }
         .mic-uom { width: 65px; }
         
-        .mic-bottom-row { display: grid; grid-template-columns: 1fr 1fr 1fr auto auto; gap: 6px; align-items: center; }
-        @media (max-width: 450px) {
-            .mic-bottom-row { grid-template-columns: 1fr 1fr auto auto; }
-            .mic-notes-group { grid-column: span 2; }
+        .mic-bottom-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr auto auto; gap: 6px; align-items: center; }
+        @media (max-width: 500px) {
+            .mic-bottom-row { grid-template-columns: 1fr 1fr 1fr auto auto; }
+            .mic-notes-group { grid-column: span 3; }
         }
         .mic-group { display: flex; flex-direction: column; gap: 2px; }
         .mic-group label { font-size: 8px; font-weight: 800; color: #475569; text-transform: uppercase; }
@@ -464,7 +464,7 @@
     <div class="submit-container no-print" id="postSubmitContainer" style="display: none; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 8px; text-align: center;">
         <p style="margin: 0 0 6px 0; font-weight: bold; color: #166534; font-size: 12px;" id="successMsg">🎉 Saved Successfully!</p>
         <div style="display: flex; justify-content: center; gap: 6px; flex-wrap: wrap;">
-            <button class="btn btn-pdf" style="padding: 6px 10px; font-size: 11px;" onclick="sharePDF()">📲 PDF</button>
+            <button class="btn btn-pdf" style="padding: 6px 10px; font-size: 11px;" onclick="sharePDF()">📲 Share PDF</button>
             <button class="btn btn-whatsapp" style="padding: 6px 10px; font-size: 11px;" onclick="sendWhatsApp()">💬 WhatsApp</button>
             <button class="btn btn-jpeg" style="padding: 6px 10px; font-size: 11px;" onclick="downloadJPEG()">🖼️ JPEG</button>
             <button class="btn btn-print" style="padding: 6px 10px; font-size: 11px;" onclick="window.print()">🖨️ Print</button>
@@ -494,7 +494,6 @@
 </div>
 
 <script>
-    // Connected Google Apps Script URL
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby1JkIJWfrIShUmpfBIom4y3tcppdeauEzTL9RwMBhnu4uH4FjzzIEOfxns5VuP4sfh/exec"; 
 
     function syncToGoogleSheets(eventData) {
@@ -514,28 +513,28 @@
 
     const defaultFavorites = {
         tabEvents: [
-            { id: 'def_1', name: 'LED Food Counters', uom: '', unitCost: '', qty: '', notes: '' },
-            { id: 'def_2', name: 'LED Wall', uom: '', unitCost: '', qty: '', notes: '' },
-            { id: 'def_3', name: 'Dance Floor', uom: '', unitCost: '', qty: '', notes: '' },
-            { id: 'def_4', name: 'Sound System', uom: '', unitCost: '', qty: '', notes: '' },
-            { id: 'def_5', name: 'Photography', uom: '', unitCost: '', qty: '', notes: '' }
+            { id: 'def_1', name: 'LED Food Counters', uom: '', unitCost: '', qty: '', days: 1, notes: '' },
+            { id: 'def_2', name: 'LED Wall', uom: '', unitCost: '', qty: '', days: 1, notes: '' },
+            { id: 'def_3', name: 'Dance Floor', uom: '', unitCost: '', qty: '', days: 1, notes: '' },
+            { id: 'def_4', name: 'Sound System', uom: '', unitCost: '', qty: '', days: 1, notes: '' },
+            { id: 'def_5', name: 'Photography', uom: '', unitCost: '', qty: '', days: 1, notes: '' }
         ],
         tabSpecial: [
-            { id: 'def_6', name: 'Cold Fire', uom: '', unitCost: '', qty: '', notes: '' },
-            { id: 'def_7', name: 'Flower Blast', uom: '', unitCost: '', qty: '', notes: '' },
-            { id: 'def_8', name: 'Paper Blast', uom: '', unitCost: '', qty: '', notes: '' },
-            { id: 'def_9', name: 'Fog Machine', uom: '', unitCost: '', qty: '', notes: '' }
+            { id: 'def_6', name: 'Cold Fire', uom: '', unitCost: '', qty: '', days: 1, notes: '' },
+            { id: 'def_7', name: 'Flower Blast', uom: '', unitCost: '', qty: '', days: 1, notes: '' },
+            { id: 'def_8', name: 'Paper Blast', uom: '', unitCost: '', qty: '', days: 1, notes: '' },
+            { id: 'def_9', name: 'Fog Machine', uom: '', unitCost: '', qty: '', days: 1, notes: '' }
         ],
         tabCatering: [
-            { id: 'def_c1', name: 'Tiffins', uom: '', unitCost: '', qty: '', notes: '' },
-            { id: 'def_c2', name: 'Lunch', uom: '', unitCost: '', qty: '', notes: '' },
-            { id: 'def_c3', name: 'Snacks', uom: '', unitCost: '', qty: '', notes: '' },
-            { id: 'def_c4', name: 'Dinner', uom: '', unitCost: '', qty: '', notes: '' }
+            { id: 'def_c1', name: 'Tiffins', uom: '', unitCost: '', qty: '', days: 1, notes: '' },
+            { id: 'def_c2', name: 'Lunch', uom: '', unitCost: '', qty: '', days: 1, notes: '' },
+            { id: 'def_c3', name: 'Snacks', uom: '', unitCost: '', qty: '', days: 1, notes: '' },
+            { id: 'def_c4', name: 'Dinner', uom: '', unitCost: '', qty: '', days: 1, notes: '' }
         ],
         tabDecor: [
-            { id: 'def_10', name: 'Entrance Arch', uom: '', unitCost: '', qty: '', notes: '' },
-            { id: 'def_11', name: 'Stage Decor', uom: '', unitCost: '', qty: '', notes: '' },
-            { id: 'def_12', name: 'Passage Lighting', uom: '', unitCost: '', qty: '', notes: '' }
+            { id: 'def_10', name: 'Entrance Arch', uom: '', unitCost: '', qty: '', days: 1, notes: '' },
+            { id: 'def_11', name: 'Stage Decor', uom: '', unitCost: '', qty: '', days: 1, notes: '' },
+            { id: 'def_12', name: 'Passage Lighting', uom: '', unitCost: '', qty: '', days: 1, notes: '' }
         ]
     };
 
@@ -630,7 +629,7 @@
     function addNewPriceListItem() {
         const favs = getCustomFavorites();
         if (!favs[currentPriceListTab]) favs[currentPriceListTab] = [];
-        favs[currentPriceListTab].push({ id: 'cust_' + Date.now(), name: '', uom: '', unitCost: '', qty: '', notes: '' });
+        favs[currentPriceListTab].push({ id: 'cust_' + Date.now(), name: '', uom: '', unitCost: '', qty: '', days: 1, notes: '' });
         saveCustomFavorites(favs);
         renderPriceListTable();
     }
@@ -819,14 +818,19 @@
             const catDiv = document.createElement('div');
             catDiv.className = 'event-category-section';
 
-            let catTotal = cat.items.reduce((sum, item) => sum + ((parseFloat(item.unitCost) || 0) * (parseFloat(item.qty) || 0)), 0);
+            let catTotal = cat.items.reduce((sum, item) => {
+                const uCost = parseFloat(item.unitCost) || 0;
+                const qty = parseFloat(item.qty) || 1;
+                const days = parseFloat(item.days) || 1;
+                return sum + (uCost * qty * days);
+            }, 0);
 
             let favPanelsHTML = '';
             ['tabEvents', 'tabSpecial', 'tabCatering', 'tabDecor'].forEach(tabId => {
                 let chipsHTML = '';
                 (favs[tabId] || []).forEach(item => {
                     const priceText = item.unitCost !== '' && item.unitCost !== undefined && !isNaN(item.unitCost) ? ` (₹${item.unitCost})` : '';
-                    chipsHTML += `<div class="chip" onclick="addItemToCategory(${catIdx}, '${item.name}', '${item.uom || ''}', '${item.unitCost !== undefined ? item.unitCost : ''}', '${item.qty !== undefined ? item.qty : ''}', '${item.notes || ''}')"><span>+ ${item.name}${priceText}</span></div>`;
+                    chipsHTML += `<div class="chip" onclick="addItemToCategory(${catIdx}, '${item.name}', '${item.uom || ''}', '${item.unitCost !== undefined ? item.unitCost : ''}', '${item.qty !== undefined ? item.qty : ''}', '${item.days !== undefined ? item.days : 1}', '${item.notes || ''}')"><span>+ ${item.name}${priceText}</span></div>`;
                 });
                 const activeClass = (tabId === 'tabEvents') ? 'active' : '';
                 favPanelsHTML += `<div class="fav-content-panel ${activeClass}" id="${tabId}-${catIdx}" style="${tabId === 'tabEvents' ? 'display:flex;' : 'display:none;'}">${chipsHTML}</div>`;
@@ -835,7 +839,10 @@
             let itemsHTML = '';
             if (cat.items.length > 0) {
                 cat.items.forEach((item, itemIdx) => {
-                    const lineTotal = (parseFloat(item.unitCost) || 0) * (parseFloat(item.qty) || 0);
+                    const uCost = parseFloat(item.unitCost) || 0;
+                    const qty = parseFloat(item.qty) || 1;
+                    const days = parseFloat(item.days) || 1;
+                    const lineTotal = uCost * qty * days;
                     const serialNo = itemIdx + 1;
 
                     itemsHTML += `
@@ -857,8 +864,12 @@
                                     <input type="number" inputmode="decimal" class="mic-input text-right" value="${item.unitCost !== undefined && item.unitCost !== '' ? item.unitCost : ''}" oninput="updateItemCalculation(${catIdx}, ${itemIdx}, 'unitCost', this.value)" placeholder="0">
                                 </div>
                                 <div class="mic-group">
-                                    <label>Quantity</label>
-                                    <input type="number" inputmode="numeric" class="mic-input text-right" value="${item.qty !== undefined && item.qty !== '' ? item.qty : ''}" oninput="updateItemCalculation(${catIdx}, ${itemIdx}, 'qty', this.value)" placeholder="0" style="font-weight: bold; background: #fffdf0;">
+                                    <label>Qty</label>
+                                    <input type="number" inputmode="numeric" class="mic-input text-right" value="${item.qty !== undefined && item.qty !== '' ? item.qty : ''}" oninput="updateItemCalculation(${catIdx}, ${itemIdx}, 'qty', this.value)" placeholder="1">
+                                </div>
+                                <div class="mic-group">
+                                    <label>Days</label>
+                                    <input type="number" inputmode="numeric" class="mic-input text-right" value="${item.days !== undefined && item.days !== '' ? item.days : 1}" oninput="updateItemCalculation(${catIdx}, ${itemIdx}, 'days', this.value)" placeholder="1" style="font-weight: bold; background: #fffdf0;">
                                 </div>
                                 <div class="mic-group mic-notes-group">
                                     <label>Notes</label>
@@ -940,17 +951,17 @@
         saveLiveDraft();
     }
     function addNewRowToCategory(catIdx) {
-        eventCategories[catIdx].items.push({ name: "", uom: "", unitCost: "", qty: "", notes: "" });
+        eventCategories[catIdx].items.push({ name: "", uom: "", unitCost: "", qty: "", days: 1, notes: "" });
         renderCategories();
         saveLiveDraft();
     }
-    function addItemToCategory(catIdx, name, uom, unitCost, qty, notes) {
-        eventCategories[catIdx].items.push({ name, uom, unitCost, qty, notes });
+    function addItemToCategory(catIdx, name, uom, unitCost, qty, days, notes) {
+        eventCategories[catIdx].items.push({ name, uom, unitCost, qty, days: days || 1, notes });
         renderCategories();
         saveLiveDraft();
     }
     function clearItemRow(catIdx, itemIdx) {
-        eventCategories[catIdx].items[itemIdx] = { name: "", uom: "", unitCost: "", qty: "", notes: "" };
+        eventCategories[catIdx].items[itemIdx] = { name: "", uom: "", unitCost: "", qty: "", days: 1, notes: "" };
         renderCategories();
         saveLiveDraft();
     }
@@ -974,11 +985,17 @@
     function updateItemCalculation(catIdx, itemIdx, key, val) {
         eventCategories[catIdx].items[itemIdx][key] = val;
         const item = eventCategories[catIdx].items[itemIdx];
-        const lineTotal = (parseFloat(item.unitCost) || 0) * (parseFloat(item.qty) || 0);
+        const uCost = parseFloat(item.unitCost) || 0;
+        const qty = parseFloat(item.qty) || 1;
+        const days = parseFloat(item.days) || 1;
+        const lineTotal = uCost * qty * days;
+        
         const lineTotalEl = document.querySelector(`.line-total-${catIdx}-${itemIdx}`);
         if (lineTotalEl) lineTotalEl.innerText = lineTotal.toLocaleString('en-IN');
 
-        const catTotal = eventCategories[catIdx].items.reduce((sum, i) => sum + ((parseFloat(i.unitCost) || 0) * (parseFloat(i.qty) || 0)), 0);
+        const catTotal = eventCategories[catIdx].items.reduce((sum, i) => {
+            return sum + ((parseFloat(i.unitCost) || 0) * (parseFloat(i.qty) || 1) * (parseFloat(i.days) || 1));
+        }, 0);
         const catTotalEl = document.getElementById(`catTotal-${catIdx}`);
         if (catTotalEl) catTotalEl.innerText = catTotal.toLocaleString('en-IN');
 
@@ -1039,7 +1056,12 @@
     function calculateTotals() {
         let grandTotal = 0;
         eventCategories.forEach(cat => {
-            grandTotal += cat.items.reduce((acc, item) => acc + ((parseFloat(item.unitCost) || 0) * (parseFloat(item.qty) || 0)), 0);
+            grandTotal += cat.items.reduce((acc, item) => {
+                const uCost = parseFloat(item.unitCost) || 0;
+                const qty = parseFloat(item.qty) || 1;
+                const days = parseFloat(item.days) || 1;
+                return acc + (uCost * qty * days);
+            }, 0);
         });
 
         const discountInput = document.getElementById('discountInput');
@@ -1204,6 +1226,7 @@
                         <div style="margin-top:2px; font-size:11px; color:#475569;">📞 ${evt.custMobile || 'N/A'} | 📍 ${evt.eventVenue || 'N/A'}</div>
                     </div>
                     <div style="display: flex; gap: 4px; align-items: center;" class="no-print">
+                        <button onclick="loadEvent('${evt.id}'); setTimeout(sharePDF, 300);" style="background:#0d9488; color:#fff; padding:6px 8px; border-radius:6px; font-size:11px; border:none; font-weight:bold; cursor:pointer;" title="Share PDF">📲 PDF</button>
                         <a href="${waUrl}" target="_blank" onclick="event.stopPropagation()" style="background:#15803d; color:#fff; padding:6px 8px; border-radius:6px; font-size:11px; text-decoration:none; font-weight:bold;" title="WhatsApp">💬</a>
                     </div>
                 </div>
