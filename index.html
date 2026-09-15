@@ -511,7 +511,6 @@
     }
 
     localStorage.removeItem('vayu_active_draft');
-    localStorage.removeItem('vayu_events_db');
 
     document.getElementById('invDate').valueAsDate = new Date();
 
@@ -1170,16 +1169,32 @@
     }
 
     let activeFilter = 'all';
-    function getSavedEvents() { return JSON.parse(localStorage.getItem('vayu_events_db') || '[]'); }
-    
+    let fetchedSheetEvents = [];
+
     function openSearchModal() {
         document.getElementById('searchModal').style.display = 'flex';
         document.getElementById('modalSearchInput').value = '';
-        executeSearch();
+        
+        // Fetch live rows from Google Sheet
+        fetch(GOOGLE_SCRIPT_URL)
+            .then(res => res.json())
+            .then(data => {
+                fetchedSheetEvents = Array.isArray(data) ? data : [];
+                executeSearch();
+            })
+            .catch(err => {
+                console.error("Failed to load sheet records:", err);
+                fetchedSheetEvents = JSON.parse(localStorage.getItem('vayu_events_db') || '[]');
+                executeSearch();
+            });
+
         document.getElementById('modalSearchInput').focus();
     }
+
     function closeSearchModal() { document.getElementById('searchModal').style.display = 'none'; }
     
+    function getSavedEvents() { return fetchedSheetEvents.length > 0 ? fetchedSheetEvents : JSON.parse(localStorage.getItem('vayu_events_db') || '[]'); }
+
     function setFilter(filterType) {
         activeFilter = filterType;
         ['filterAll', 'filterEstimation', 'filterConfirmed', 'filterCompleted'].forEach(id => {
@@ -1278,6 +1293,8 @@
         const existingIndex = events.findIndex(e => e.id === currentEventId);
         if (existingIndex >= 0) events[existingIndex] = eventData;
         else events.push(eventData);
+        
+        fetchedSheetEvents = events;
         localStorage.setItem('vayu_events_db', JSON.stringify(events));
         saveLiveDraft();
         syncToGoogleSheets(eventData);
