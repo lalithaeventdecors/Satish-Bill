@@ -302,9 +302,13 @@
         .term-del-btn { background: none; border: none; color: #dc2626; font-weight: bold; cursor: pointer; font-size: 10px; margin-left: 4px; }
         .terms-hidden { display: none !important; }
 
+        /* Quotation Print/PDF Clean A4 Styling */
+        .quotation-mode { background: #fff !important; border: none !important; box-shadow: none !important; max-width: 100% !important; padding: 10mm !important; }
         .quotation-mode input, .quotation-mode select, .quotation-mode textarea { border: none !important; background: transparent !important; padding: 0 !important; box-shadow: none !important; font-weight: 700 !important; color: #000 !important; appearance: none !important; }
         .quotation-mode .brand-address { display: block !important; }
         .quotation-mode .term-del-btn { display: none !important; }
+        .quotation-mode .client-grid { border: 1px solid #1b4332 !important; background: #fff !important; }
+        .quotation-mode .mobile-item-card { background: #fff !important; border: 1px solid #cbd5e0 !important; margin-bottom: 4px !important; }
 
         /* Print Settings */
         @media print {
@@ -494,7 +498,7 @@
 </div>
 
 <script>
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby1JkIJWfrIShUmpfBIom4y3tcppdeauEzTL9RwMBhnu4uH4FjzzIEOfxns5VuP4sfh/exec"; 
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxhSfVsGxcxKlp7DvvPFm9n1p7HKuZpzCpVYhEWR6fhyl20RUmK6P14DRnGDuxoaMLU/exec"; 
 
     function syncToGoogleSheets(eventData) {
         if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.trim() === "") return;
